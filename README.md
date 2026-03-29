@@ -1,92 +1,103 @@
-# 🧠 Système de Feedback Pédagogique Intelligent
+# 🧠 Intelligent Assessment System
 
-> **Génération automatique de feedback pédagogique en mathématiques**  
-> Projet de Fin d'Études (PFE) - Master Informatique et Intelligence Artificielle  
-> Université Ibn Tofail, Faculté des Sciences, Kénitra
+> **AI-Powered Multi-Subject Educational Assessment Platform**  
+> Automated Exam Generation, Evaluation & Personalized Feedback  
+> Multi-Language Support: French, English, Arabic  
+> 
+> **📖 [Version Française](./README_FR.md) | English (Current)**
 
 ---
 
-## 📋 Table des Matières
+## 📋 Table of Contents
 
-- [Vue d'ensemble](#-vue-densemble)
-- [Fonctionnalités](#-fonctionnalités)
-- [Architecture du Système](#-architecture-du-système)
+- [Overview](#-overview)
+- [Features](#-features)
+- [System Architecture](#-system-architecture)
 - [Installation](#-installation)
-- [Utilisation](#-utilisation)
-- [Pages de l'Application](#-pages-de-lapplication)
-- [Technologies Utilisées](#-technologies-utilisées)
+- [Usage](#-usage)
+- [Application Pages](#-application-pages)
+- [Technologies](#-technologies)
+- [Docker Deployment](#-docker-deployment)
 - [Documentation](#-documentation)
-- [Performance](#-performance)
-- [Contribuer](#-contribuer)
+- [Project Context](#-project-context)
 
 ---
 
-## 🎯 Vue d'ensemble
+## 🎯 Overview
 
-Ce projet propose un **système automatisé et intelligent** pour générer du feedback pédagogique personnalisé sur des exercices de mathématiques de niveau collège et lycée. Il combine:
+An **AI-driven comprehensive educational assessment platform** that leverages Large Language Models (LLMs) and advanced NLP techniques to automate exam generation, response evaluation, and personalized feedback across multiple subjects and difficulty levels.
 
-- **Classification automatique** des réponses d'élèves (CamemBERT fine-tuné)
-- **Génération de feedback** adaptatif via LLMs (GPT-4, Groq, etc.)
-- **Création d'examens** intelligente avec questions uniques
-- **Interface interactive** pour étudiants et enseignants
-- **Tuteur virtuel** basé sur l'IA pour aide personnalisée
+### Key Capabilities
 
-### 🎓 Contexte Académique
+- ✅ **Multi-Subject Support**: Mathematics, Physics, and extensible to any domain
+- ✅ **Intelligent Exam Generation**: Auto-distribute by topic/difficulty with unique questions
+- ✅ **Smart Response Evaluation**: Automated grading with detailed explanations
+- ✅ **Adaptive Feedback**: Context-aware feedback tailored to student performance
+- ✅ **Multi-Language**: Fluent support for French, English, and Arabic
+- ✅ **RAG-Powered Learning**: Retrieves relevant course materials for context
+- ✅ **Real-Time Analytics**: Track student progress & identify learning gaps
+- ✅ **User-Friendly Interface**: Streamlit frontend for students & teachers
 
-**Auteur:** Ibtissam Fadili  
-**Encadrante:** Dr. Zineb Goutti  
-**Institution:** Faculté des Sciences de Kénitra - Université Ibn Tofail  
-**Formation:** Master Informatique et Intelligence Artificielle  
-**Année:** 2024-2025
+### Academic Context
+
+**Author:** Ibtissam Fadili  
+**Supervisor:** Dr. Zineb Goutti  
+**Institution:** Faculty of Sciences, Ibn Tofail University, Kenitra  
+**Program:** Master's in Computer Science & Artificial Intelligence  
+**Year:** 2024-2025
 
 ---
 
-## 🚀 Fonctionnalités
+## 🚀 Features
 
-### 1. **📊 Exploration des Données**
-- Visualisation interactive du dataset
-- Statistiques détaillées par niveau, cours et difficulté
-- Analyse de la distribution des questions
+### 1. **📊 Data Exploration**
+- Interactive dataset visualization
+- Detailed statistics by level, subject, and difficulty
+- Question distribution analysis
+- Visual insights with Plotly
 
-### 2. **🔍 Classification de Réponses**
-- Classification automatique en 3 catégories:
-  - ✅ **Correcte**
-  - ⚠️ **Partielle**
-  - ❌ **Incorrecte**
-- Modèle CamemBERT fine-tuné (F1-Score: 0.91)
-- Comparaison avec classification LLM
+### 2. **🔍 Response Classification**
+- Automatic classification in 3 categories:
+  - ✅ **Correct**
+  - ⚠️ **Partial**
+  - ❌ **Incorrect**
+- Fine-tuned CamemBERT model (F1-Score: 0.91)
+- Comparison with LLM classification
+- Real-time confidence scores
 
-### 3. **💬 Génération de Feedback**
-- Feedback personnalisé et constructif
-- Adaptation au niveau de l'élève
-- Suggestions d'amélioration ciblées
-- Multi-providers LLM (Groq, OpenAI, OpenRouter)
+### 3. **💬 Feedback Generation**
+- Personalized & constructive feedback
+- Adaptive to student level
+- Targeted improvement suggestions
+- Multi-provider LLM support (Groq, OpenAI, Claude)
+- Temperature & token customization
 
-### 4. **📈 Métriques d'Évaluation**
-- Calcul automatique de: BLEU, ROUGE-1, ROUGE-L, BERTScore
-- Comparaison feedback généré vs. feedback humain
-- Analyse de similarité sémantique
+### 4. **📈 Evaluation Metrics**
+- Automatic calculation: BLEU, ROUGE-1, ROUGE-L, BERTScore
+- Generated vs. human feedback comparison
+- Semantic similarity analysis
+- Performance dashboards
 
-### 5. **📝 Création d'Examens** (Enseignants)
-- Génération automatique de questions uniques
-- Répartition intelligente par cours (auto-normalisation)
-- Questions groupées par thème
-- Support de pourcentages flexibles
-- Export en PDF, Word, JSON
+### 5. **📝 Exam Creation** (Teachers)
+- Automated unique question generation
+- Smart distribution by course (auto-normalization)
+- Questions grouped by theme
+- Flexible percentage support
+- Export to PDF, Word, JSON
 
-### 6. **📝 Passage d'Examens** (Étudiants)
-- Interface intuitive avec timer
-- Upload de fichiers (PDF, Word, JSON)
-- Extraction automatique de questions
-- Feedback instantané après soumission
-- Génération de cours personnalisés
+### 6. **📝 Exam Taking** (Students)
+- Intuitive interface with timer
+- File upload support (PDF, Word, JSON)
+- Automatic question extraction
+- Instant feedback after submission
+- Personalized course generation
 
-### 7. **💬 Tuteur Interactif** (IA)
-- Assistant virtuel pour aide en mathématiques
-- Génération de questions adaptées
-- Exercices avec solutions complètes
-- Cours complets sur demande
-- Historique de conversation sauvegardé
+### 7. **💬 Interactive Tutor** (AI Assistant)
+- Virtual math assistant
+- Adaptive question generation
+- Exercises with complete solutions
+- Full courses on demand
+- Conversation history saved
 
 ---
 
@@ -142,315 +153,334 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
 
 ## 💻 Installation
 
-### Prérequis
+### Prerequisites
 
 - Python 3.9+
-- pip ou uv
-- Clés API (Groq, OpenAI, ou OpenRouter)
+- pip or uv
+- API Keys (Groq, OpenAI, or OpenRouter)
+- Docker & Docker Compose (optional)
 
-### Installation Rapide
+### Quick Start
 
 ```bash
-# Cloner le repository
-git clone https://github.com/votre-repo/Advanced-Mathematic-Agent-PFE.git
-cd Advanced-Mathematic-Agent-PFE
+# Clone the repository
+git clone https://github.com/gothamza/Intelligent-Assessment-System.git
+cd Intelligent-Assessment-System
 
-# Installer les dépendances
+# Install dependencies
 pip install -r requirements.txt
 
-# Configurer les clés API
+# Configure API keys
 cp env.example .env
-# Éditez .env et ajoutez vos clés API
+# Edit .env and add your API keys
 
-# Lancer l'application
+# Launch the application
 streamlit run main.py
 ```
 
-### Avec Docker
+### Docker Setup
 
 ```bash
-# Construire et lancer tous les services
+# Build and start all services
 docker-compose up --build
 
-# Accéder à l'application
-# Frontend Streamlit:  http://localhost:8501
-# Backend API:         http://localhost:8000
-# API Docs:            http://localhost:8000/docs
+# Access the services:
+# - Streamlit Frontend:   http://localhost:8501
+# - FastAPI Backend:      http://localhost:8000
+# - API Documentation:    http://localhost:8000/docs
 ```
 
-**Services lancés automatiquement:**
-- ✅ Frontend Streamlit
-- ✅ Backend FastAPI
-- ✅ Base de données PostgreSQL
+**Services automatically started:**
+- ✅ Streamlit Frontend
+- ✅ FastAPI Backend
+- ✅ PostgreSQL Database
 - ✅ Vector Store (Chroma)
 
-**Pour arrêter:**
+**Stop services:**
 ```bash
 docker-compose down
 ```
 
-**Pour voir les logs:**
+**View logs:**
 ```bash
-docker-compose logs -f frontend  # Logs Streamlit
-docker-compose logs -f backend   # Logs FastAPI
+docker-compose logs -f frontend  # Streamlit logs
+docker-compose logs -f backend   # FastAPI logs
 ```
 
-### Configuration des Clés API
+### API Key Configuration
 
-Créez un fichier `.env` à la racine:
+Create a `.env` file at the root with your credentials:
 
 ```env
-# Groq (Recommandé - Gratuit)
-GROQ_API_KEY=gsk-votre-clé-ici
-GROQ_API_KEY2=gsk-autre-clé-optionnelle
+# ===========================================
+# GROQ API Keys (Recommended - Free)
+# ===========================================
+GROQ_API_KEY=your-groq-api-key-here
+GROQ_API_KEY2=your-second-groq-api-key-here
 
-# OpenAI (Optionnel)
-OPENAI_API_KEY=sk-votre-clé-ici
+# ===========================================
+# Other LLM Providers
+# ===========================================
+OPENAI_API_KEY=your-openai-api-key-here
+OPENROUTER_API_KEY=your-openrouter-api-key-here
 
-# OpenRouter (Alternatif - Gratuit)
-OPENROUTER_API_KEY=sk-or-votre-clé-ici
+# ===========================================
+# Database
+# ===========================================
+POSTGRES_DB=assessment_db
+POSTGRES_USER=assessment_user
+POSTGRES_PASSWORD=your-secure-password
 
-# Tavily (Recherche - Optionnel)
-TAVILY_API_KEY=tvly-votre-clé-ici
+# ===========================================
+# Application URLs
+# ===========================================
+BACKEND_URL=http://backend:8000
+PUBLIC_BACKEND_URL=http://localhost:8000
 
-# LangSmith (Tracing - Optionnel)
+# ===========================================
+# LangSmith Tracing (Optional)
+# ===========================================
 LANGSMITH_TRACING=true
-LANGSMITH_API_KEY=lsv2_pt-votre-clé-ici
-LANGSMITH_PROJECT=mon-projet
+LANGSMITH_API_KEY=your-langsmith-api-key-here
+LANGSMITH_PROJECT=your-project-name
 ```
 
-💡 **Astuce:** Vous pouvez utiliser uniquement Groq (gratuit) pour démarrer!
+💡 **Tip:** You can start with just Groq (free) for development!
 
 ---
 
-## 🎮 Utilisation
+## 🎮 Usage
 
-### Démarrage
+### Getting Started
 
 ```bash
 streamlit run main.py
 ```
 
-L'application s'ouvre automatiquement dans votre navigateur à `http://localhost:8501`
+The application opens automatically in your browser at `http://localhost:8501`
 
 ### Navigation
 
-L'application comporte **7 pages** accessibles via la sidebar:
+The application has **7 pages** accessible from the sidebar:
 
-1. **📊 Exploration des Données** - Visualisation du dataset
-2. **🔍 Classification de Réponses** - Test du classificateur
-3. **💬 Génération de Feedback** - Test de génération
-4. **📈 Métriques d'Évaluation** - Résultats et performances
-5. **📝 Création d'Examens** - Pour enseignants
-6. **📝 Passer Examen** - Pour étudiants
-7. **💬 Tuteur Interactif** - Assistant IA
+1. **📊 Data Exploration** - Dataset visualization
+2. **🔍 Answer Classification** - Classifier testing
+3. **💬 Feedback Generation** - Feedback testing
+4. **📈 Evaluation Metrics** - Results and performance
+5. **📝 Create Exam** - For teachers
+6. **📝 Take Exam** - For students
+7. **💬 Interactive Tutor** - AI Assistant
 
 ---
 
-## 📱 Pages de l'Application
+## 📱 Application Pages
 
-### 1. Exploration des Données
-- **Objectif:** Comprendre le dataset
-- **Fonctionnalités:**
-  - Statistiques par niveau/cours
-  - Distribution des questions
-  - Visualisations interactives
+### 1. Data Exploration
+- **Goal:** Understand the dataset
+- **Features:**
+  - Statistics by level/course
+  - Question distribution
+  - Interactive visualizations
 
-### 2. Classification de Réponses
-- **Objectif:** Classifier la qualité des réponses
-- **Fonctionnalités:**
-  - Classification CamemBERT
-  - Comparaison avec LLM
-  - Analyse du raisonnement
+### 2. Answer Classification
+- **Goal:** Classify answer quality
+- **Features:**
+  - CamemBERT classification
+  - LLM comparison
+  - Reasoning analysis
 
-### 3. Génération de Feedback
-- **Objectif:** Générer du feedback personnalisé
-- **Fonctionnalités:**
-  - Feedback adaptatif
-  - Multi-providers LLM
-  - Configuration température/tokens
+### 3. Feedback Generation
+- **Goal:** Generate personalized feedback
+- **Features:**
+  - Adaptive feedback
+  - Multi-provider LLM
+  - Temperature/token configuration
 
-### 4. Métriques d'Évaluation
-- **Objectif:** Évaluer la qualité du feedback
+### 4. Evaluation Metrics
+- **Goal:** Evaluate feedback quality
+- **Features:**
+  - BLEU, ROUGE, BERTScore metrics
+  - Comparison with human reference
+  - Training results
 - **Fonctionnalités:**
   - BLEU, ROUGE, BERTScore
   - Comparaison avec référence humaine
   - Résultats d'entraînement
 
-### 5. Création d'Examens
-- **Objectif:** Créer des examens personnalisés
-- **Fonctionnalités:**
-  - Génération automatique de questions **uniques**
-  - Répartition par cours (auto-normalisation)
-  - Questions **groupées par thème**
-  - Export multi-formats
+### 5. Create Exam
+- **Goal:** Create custom exams
+- **Features:**
+  - Automatic unique question generation
+  - Course-based distribution (auto-normalization)
+  - Questions grouped by theme
+  - Multi-format export
 
-**Nouveautés:**
-- ✅ Questions uniques (détection de similarité)
-- ✅ Auto-normalisation des pourcentages
-- ✅ Groupement automatique par cours
+**New Features:**
+- ✅ Unique questions (similarity detection)
+- ✅ Auto-normalization of percentages
+- ✅ Automatic grouping by course
 
-### 6. Passer Examen
-- **Objectif:** Interface pour étudiants
-- **Fonctionnalités:**
-  - Upload PDF/Word/JSON
-  - **Extraction automatique de durée**
-  - Timer avec countdown
-  - Feedback instantané
-  - Génération de cours personnalisés
+### 6. Take Exam
+- **Goal:** Interface for students
+- **Features:**
+  - PDF/Word/JSON upload
+  - **Automatic duration extraction**
+  - Timer with countdown
+  - Instant feedback
+  - Personalized course generation
 
-**Nouveautés:**
-- ✅ Extraction intelligente de la durée depuis documents
-- ✅ Calcul auto: 5 min × nombre de questions
-- ✅ Support multi-formats (PDF, Word, JSON)
+**New Features:**
+- ✅ Intelligent duration extraction from documents
+- ✅ Auto-calculation: 5 min × number of questions
+- ✅ Multi-format support (PDF, Word, JSON)
 
-### 7. Tuteur Interactif
-- **Objectif:** Assistant virtuel personnalisé
-- **Fonctionnalités:**
-  - Génération de questions adaptées
-  - Classification de réponses en temps réel
-  - Exercices avec solutions
-  - Cours complets sur demande
-  - Historique de conversation
+### 7. Interactive Tutor
+- **Goal:** Personalized virtual assistant
+- **Features:**
+  - Adaptive question generation
+  - Real-time answer classification
+  - Exercises with solutions
+  - Complete courses on demand
+  - Conversation history
 
 ---
 
 ## 🎬 Application en Action
 
-### 📸 Interface Utilisateur - Capture d'écrans
+### 📸 User Interface Screenshots
 
-#### 1️⃣ Création d'Examens (Vue 1)
-![Création d'Examen - Interface 1](./images/Cr%C3%A9ation%20d%27Examen1.png)
-*Figure 4: Interface de création d'examens - Sélection des cours et configuration*
+#### 1️⃣ Create Exam (View 1)
+![Create Exam Interface 1](./images/Cr%C3%A9ation%20d%27Examen1.png)
+*Figure 4: Exam creation interface - Course selection and configuration*
 
-**Point clés:**
-- Sélection multi-cours intuitive
-- Paramétrage de la difficulté
-- Distribution automatique des questions
+**Key Points:**
+- Intuitive multi-course selection
+- Difficulty parameter settings
+- Automatic question distribution
 
-#### 2️⃣ Création d'Examens (Vue 2) - Résultat Généré
-![Création d'Examen - Interface 2](./images/Cr%C3%A9ation%20d%27Examen2.png)
-*Figure 5: Interface de création d'examens - Examen généré avec questions*
+#### 2️⃣ Create Exam (View 2) - Generated Result
+![Create Exam Interface 2](./images/Cr%C3%A9ation%20d%27Examen2.png)
+*Figure 5: Exam creation interface - Generated exam with questions*
 
-**Point clés:**
-- Questions groupées par cours
-- Aperçu des questions générées
-- Options d'export (PDF, Word, JSON)
+**Key Points:**
+- Questions grouped by course
+- Preview of generated questions
+- Export options (PDF, Word, JSON)
 
-#### 3️⃣ Passer un Examen - Interface Étudiante
-![Passer un Examen](./images/PasserunExamen.png)
-*Figure 6: Interface pour passer un examen - Environnement de travail*
+#### 3️⃣ Take Exam - Student Interface
+![Take Exam](./images/PasserunExamen.png)
+*Figure 6: Interface to take an exam - Working environment*
 
-**Point clés:**
-- Upload facile de fichiers d'examen
-- Timer intégré avec countdown
-- Text area pour réponses
-- Feedback instantané après soumission
+**Key Points:**
+- Easy file upload
+- Built-in timer with countdown
+- Text area for answers
+- Instant feedback after submission
 
 ---
 
-## 🐳 Infrastructure & Déploiement
+## 🐳 Infrastructure & Deployment
 
-### Architecture Docker
+### Docker Architecture
 
 ![Docker Architecture](./images/docker.jpeg)
-*Figure 7: Architecture Docker - Orchestration des services*
+*Figure 7: Docker Architecture - Service Orchestration*
 
-**Services disponibles:**
-- 🎯 **Frontend Streamlit** (Port 8501)
-- 🔧 **Backend FastAPI** (Port 8000)
+**Available Services:**
+- 🎯 **Streamlit Frontend** (Port 8501)
+- 🔧 **FastAPI Backend** (Port 8000)
 - 🗄️ **PostgreSQL Database** (Port 5432)
 - 📊 **Vector Store (Chroma)** (Port 8001)
 
 ---
 
-## 🛠️ Technologies Utilisées
+## 🛠️ Technologies Used
 
-### Intelligence Artificielle
+### Artificial Intelligence
 
-| Technologie | Utilisation | Performance |
-|-------------|-------------|-------------|
-| **CamemBERT** | Classification de réponses | F1: 0.91, Accuracy: 0.89 |
-| **GPT-4 / Groq** | Génération de feedback | BLEU: 0.42, ROUGE-L: 0.58 |
-| **BERTScore** | Évaluation sémantique | Précision: 0.85 |
-| **LangChain** | Orchestration LLM | - |
+| Technology | Usage | Performance |
+|------------|-------|-------------|
+| **CamemBERT** | Answer classification | F1: 0.91, Accuracy: 0.89 |
+| **GPT-4 / Groq** | Feedback generation | BLEU: 0.42, ROUGE-L: 0.58 |
+| **BERTScore** | Semantic evaluation | Precision: 0.85 |
+| **LangChain** | LLM orchestration | - |
 
 ### Backend & Framework
 
-- **Python 3.9+** - Langage principal
-- **Streamlit** - Framework d'interface
-- **Transformers (Hugging Face)** - Modèles NLP
+- **Python 3.9+** - Main language
+- **Streamlit** - UI framework
+- **Transformers (Hugging Face)** - NLP models
 - **PyTorch** - Deep learning
-- **Pandas** - Manipulation de données
-- **NumPy** - Calculs numériques
+- **Pandas** - Data manipulation
+- **NumPy** - Numerical computing
 
-### Visualisation
+### Visualization
 
-- **Plotly** - Graphiques interactifs
-- **Matplotlib** - Visualisations statiques
-- **Seaborn** - Visualisations statistiques
+- **Plotly** - Interactive charts
+- **Matplotlib** - Static visualizations
+- **Seaborn** - Statistical visualizations
 
-### Déploiement
+### Deployment
 
-- **Docker** - Containerisation
-- **Streamlit Cloud** - Hébergement cloud
-- **Git** - Versioning
+- **Docker** - Containerization
+- **Streamlit Cloud** - Cloud hosting
+- **Git** - Version control
 
 ---
 
 ## 📚 Documentation
 
-### Guides Disponibles
+### Available Guides
 
-| Fichier | Description |
-|---------|-------------|
-| **[README.md](README.md)** | 📱 **Guide principal de l'application Streamlit** (ce fichier) |
-| **[README_NOTEBOOKS.md](README_NOTEBOOKS.md)** | 📓 Guide complet pour les notebooks Jupyter |
-| **[TRAINING_RESULTS.md](TRAINING_RESULTS.md)** | 📊 Résultats d'entraînement du modèle CamemBERT |
+| File | Description |
+|------|-------------|
+| **[README.md](README.md)** | 📱 **Main application guide** (this file) |
+| **[README_NOTEBOOKS.md](README_NOTEBOOKS.md)** | 📓 Complete guide for Jupyter notebooks |
+| **[TRAINING_RESULTS.md](TRAINING_RESULTS.md)** | 📊 CamemBERT model training results |
 
-### Obtenir les Clés API
+### Getting API Keys
 
-Pour utiliser l'application, vous aurez besoin de clés API gratuites:
+To use the application, you'll need free API keys:
 
-#### 1. **Groq (Recommandé - Gratuit et Rapide)**
-- Visitez: https://console.groq.com/keys
-- Créez un compte gratuit
-- Générez une clé API
-- Ajoutez `GROQ_API_KEY=gsk-...` dans `.env`
+#### 1. **Groq (Recommended - Free and Fast)**
+- Visit: https://console.groq.com/keys
+- Create a free account
+- Generate an API key
+- Add `GROQ_API_KEY=gsk-...` to `.env`
 
-#### 2. **OpenRouter (Alternatif - Gratuit)**
-- Visitez: https://openrouter.ai/keys
-- Créez un compte
-- Générez une clé API
-- Ajoutez `OPENROUTER_API_KEY=sk-or-...` dans `.env`
+#### 2. **OpenRouter (Alternative - Free)**
+- Visit: https://openrouter.ai/keys
+- Create an account
+- Generate an API key
+- Add `OPENROUTER_API_KEY=sk-or-...` to `.env`
 
-#### 3. **OpenAI (Optionnel - Payant)**
-- Visitez: https://platform.openai.com/api-keys
-- Nécessite une carte de crédit
-- Ajoutez `OPENAI_API_KEY=sk-...` dans `.env`
+#### 3. **OpenAI (Optional - Paid)**
+- Visit: https://platform.openai.com/api-keys
+- Requires a credit card
+- Add `OPENAI_API_KEY=sk-...` to `.env`
 
-#### 4. **LangSmith (Optionnel - Tracing)**
-- Visitez: https://smith.langchain.com/
-- Pour tracer les appels LLM
-- Ajoutez `LANGSMITH_API_KEY=lsv2_pt_...` dans `.env`
+#### 4. **LangSmith (Optional - Tracing)**
+- Visit: https://smith.langchain.com/
+- For tracing LLM calls
+- Add `LANGSMITH_API_KEY=lsv2_pt_...` to `.env`
 
 ---
 
 ## 📊 Performance
 
-### Métriques du Classificateur CamemBERT
+### CamemBERT Classifier Metrics
 
-| Métrique | Score |
-|----------|-------|
+| Metric | Score |
+|--------|-------|
 | **Accuracy** | 0.89 |
 | **F1-Score (Macro)** | 0.91 |
-| **Précision** | 0.90 |
-| **Rappel** | 0.89 |
+| **Precision** | 0.90 |
+| **Recall** | 0.89 |
 
-### Métriques de Génération de Feedback
+### Feedback Generation Metrics
 
-| Métrique | Score Moyen |
-|----------|-------------|
+| Metric | Average Score |
+|--------|----------------|
 | **BLEU** | 0.42 |
 | **ROUGE-1** | 0.51 |
 | **ROUGE-L** | 0.58 |
@@ -459,83 +489,83 @@ Pour utiliser l'application, vous aurez besoin de clés API gratuites:
 ### Dataset
 
 - **Total Questions:** 2,400+
-- **Réponses Générées:** 7,200+
-- **Niveaux:** 7ème à 12ème année
-- **Matières:** Algèbre, Géométrie, Fractions, Calcul, etc.
+- **Generated Answers:** 7,200+
+- **Levels:** 7th to 12th grade
+- **Subjects:** Algebra, Geometry, Fractions, Calculus, etc.
 
 ---
 
-## 🎯 Innovations du Projet
+## 🎯 Project Innovations
 
-### 1. **Génération de Questions Uniques**
-- Détection de similarité (Jaccard)
-- Système de retry avec température croissante
-- Contexte des questions précédentes
-- **Résultat:** 95% de questions uniques
+### 1. **Unique Question Generation**
+- Similarity detection (Jaccard)
+- Retry system with increasing temperature
+- Context from previous questions
+- **Result:** 95% unique questions
 
-### 2. **Groupement Automatique par Cours**
-- Questions organisées par thème
-- Meilleure lisibilité pour les étudiants
-- Facilite la correction pour enseignants
+### 2. **Automatic Course Grouping**
+- Questions organized by theme
+- Better readability for students
+- Facilitates grading for teachers
 
-### 3. **Auto-Normalisation des Pourcentages**
-- Plus besoin de calculer pour atteindre 100%
-- Ajustement automatique et intelligent
-- Modes automatique et manuel
+### 3. **Auto-Normalization of Percentages**
+- No need to calculate to reach 100%
+- Automatic and intelligent adjustment
+- Automatic and manual modes
 
-### 4. **Extraction Intelligente de Durée**
-- Lecture automatique depuis PDF/Word
-- Support multi-formats (français/anglais)
-- Calcul de fallback: 5 min × nb questions
+### 4. **Intelligent Duration Extraction**
+- Automatic reading from PDF/Word
+- Multi-format support (French/English)
+- Fallback calculation: 5 min × number of questions
 
-### 5. **Tuteur IA Avancé**
-- Génération de questions adaptées
-- Exercices avec solutions complètes
-- Cours complets sur demande
-- Historique persistant
+### 5. **Advanced AI Tutor**
+- Adaptive question generation
+- Exercises with complete solutions
+- Full courses on demand
+- Persistent conversation history
 
 ---
 
-## 🤝 Contribuer
+## 🤝 Contributing
 
-Les contributions sont les bienvenues! Pour contribuer:
+Contributions are welcome! To contribute:
 
-1. Fork le projet
-2. Créez une branche (`git checkout -b feature/AmazingFeature`)
-3. Committez vos changements (`git commit -m 'Add: Amazing Feature'`)
-4. Push vers la branche (`git push origin feature/AmazingFeature`)
-5. Ouvrez une Pull Request
+1. Fork the project
+2. Create a branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add: Amazing Feature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
 ## 📝 License
 
-Ce projet est développé dans le cadre d'un Projet de Fin d'Études (PFE).
+This project is developed as part of a Master's thesis (PFE).
 
 ---
 
 ## 👥 Contact
 
-**Auteur:** Ibtissam Fadili  
-**Encadrante:** Dr. Zineb Goutti  
-**Institution:** Faculté des Sciences de Kénitra - Université Ibn Tofail  
-**Email:** [votre-email@example.com]
+**Author:** Ibtissam Fadili  
+**Advisor:** Dr. Zineb Goutti  
+**Institution:** Faculty of Sciences of Kénitra - Ibn Tofail University  
+**Email:** [your-email@example.com]
 
 ---
 
-## 🙏 Remerciements
+## 🙏 Acknowledgments
 
-- **Dr. Zineb Goutti** - Encadrement et soutien académique
-- **Pr. Salma Azzouzi** & **Pr. Moulay Hassan Charaf** - Coordination du Master
-- **Alloprof** - Source de données éducatives
-- **Hugging Face** - Modèles et infrastructure
-- **Groq** - API LLM gratuite et performante
+- **Dr. Zineb Goutti** - Academic supervision and support
+- **Prof. Salma Azzouzi** & **Prof. Moulay Hassan Charaf** - Master's program coordination
+- **Alloprof** - Educational data source
+- **Hugging Face** - Models and infrastructure
+- **Groq** - Fast and free LLM API
 
 ---
 
 <div align="center">
 
-**🧠 Développé avec ❤️ en Python & Streamlit**
+**🧠 Built with ❤️ in Python & Streamlit**
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)

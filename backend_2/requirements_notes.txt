@@ -1,0 +1,103 @@
+sentence-transformers>=2.2.2  # Required for Odoo documentation retriever
+torch>=2.2.0,<=2.2.2  # Specify a compatible PyTorch version
+
+Feature	        Save as Base64 String         	                                                    Save as File (Recommended)
+Simplicity	Very Simple                                                                     . The image data is self-contained within the database record. No extra file management is needed.	More Complex. Requires logic to save the file, manage paths, and serve the file via an API endpoint.
+Database    Size	Poor                                                                    . Base64 encoding increases file size by ~33%. This will quickly bloat your database, making it slow and expensive to manage.	Excellent. The database only stores a short text path, keeping it lean and fast.
+Performance	Can be slow                                                                     . Transferring large base64 strings from the database to the backend and then to the frontend is inefficient.	Very Fast. The database query is quick, and web servers are highly optimized for serving static files.
+Scalability	Poor                                                                            . This approach does not scale well for an application with many users or frequent image generation.	Excellent. This is the industry-standard approach. You can later move files to a dedicated cloud storage service (like S3) without changing the core logic.
+Consistency	Inconsistent with how you handle uploaded documents, which are saved as files   .	Consistent. Follows the same pattern as your existing document storage logic in docs.py.
+
+
+
+
+pandas==2.2.2
+fastapi==0.104.1
+uvicorn==0.24.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+requests==2.31.0
+pydantic-settings
+PyPDF2
+python-docx
+langchain
+langchain-community
+langchain-ollama
+langchain-chroma
+langchain-groq
+chromadb
+ollama
+unstructured
+pdf2image
+pypdf
+openpyxl
+langgraph>=0.0.40
+langchain-core
+langgraph-checkpoint-sqlite
+langgraph-checkpoint-postgres
+google-generativeai>=0.3.0
+langchain-huggingface
+langchain-mcp-adapters==0.1.9
+sentence-transformers
+duckduckgo-search
+wikipedia
+langchain-tavily
+apscheduler
+langchain-google-genai
+langchain-openai
+huggingface-hub
+Pillow
+gradio_client
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+
+##version 2 
+pandas==2.2.2
+fastapi==0.104.1
+uvicorn==0.24.0
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart>=0.0.9
+psycopg2-binary==2.9.9
+python-dotenv==1.0.0
+requests==2.31.0
+pydantic-settings==2.10.0
+PyPDF2
+python-docx==1.1.2
+langchain==0.3.26
+langchain-community==0.3.26
+langchain-ollama==0.3.5
+langchain-chroma==0.2.4
+langchain-groq==0.3.5
+chromadb==1.0.13
+ollama
+unstructured==0.18.9
+pdf2image==1.16.3
+pypdf==5.8.0
+openpyxl==3.1.4
+langgraph>=0.0.40
+langchain-core
+langgraph-checkpoint-sqlite
+langgraph-checkpoint-postgres
+google-generativeai>=0.3.0
+langchain-huggingface
+langchain-mcp-adapters==0.1.9
+sentence-transformers
+duckduckgo-search
+wikipedia
+langchain-tavily
+apscheduler
+langchain-google-genai
+langchain-openai
+huggingface-hub
+Pillow
+gradio_client
+--extra-index-url https://download.pytorch.org/whl/cpu
+
+
+
+RUN pip install uv && \
+    uv pip install --system --no-cache -r requirements.txt --link-mode=copy

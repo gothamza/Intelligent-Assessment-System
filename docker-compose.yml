@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # PostgreSQL for backend_2
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-odoo_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-odoo_password}
+      POSTGRES_DB: ${POSTGRES_DB:-odoo_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./data/chroma_db:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=TRUE
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend_2
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # API Keys
+      - GROQ_API_KEY=${GROQ_API_KEY:-}
+      - GROQ_API_KEY2=${GROQ_API_KEY2:-}
+      - GROQ_API_KEY3=${GROQ_API_KEY3:-}
+      - GROQ_API_KEYS=${GROQ_API_KEYS:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPEN_ROUTER=${OPEN_ROUTER:-}
+      - GITHUB_TOKEN=${GITHUB_TOKEN:-}
+      - HF_TOKEN=${HF_TOKEN:-}
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-}
+      # ChromaDB
+      - CHROMA_HOST=chromadb
+      - CHROMA_PORT=8000
+      # Database (PostgreSQL)
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-odoo_user}:${POSTGRES_PASSWORD:-odoo_password}@postgres:5432/${POSTGRES_DB:-odoo_db}
+      # Auth
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production-min-32-chars}
+      - ALGORITHM=${ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-10080}
+      # Public URL for generated images
+      - PUBLIC_BACKEND_URL=${PUBLIC_BACKEND_URL:-http://localhost:8000}
+      - BACKEND_URL=${BACKEND_URL:-http://backend:8000}
+      # Optional
+      - OLLAMA_URL=${OLLAMA_URL:-http://ollama:11434}
+      # LangSmith
+      - LANGSMITH_TRACING=${LANGSMITH_TRACING:-false}
+      - LANGSMITH_ENDPOINT=${LANGSMITH_ENDPOINT:-}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY:-}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT:-}
+      # Tokenizers
+      - TOKENIZERS_PARALLELISM=${TOKENIZERS_PARALLELISM:-true}
+    volumes:
+      - ./backend_2:/app
+      - ./data:/app/data
+    depends_on:
+      - chromadb
+      - postgres
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend_streamlit
+      dockerfile: Dockerfile
+    ports:
+      - "8502:8501"
+    environment:
+      - BACKEND_URL=http://backend:8000
+      - GROQ_API_KEY2=${GROQ_API_KEY2:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - TAVILY_API_KEY=${TAVILY_API_KEY:-}
+      - LANGSMITH_TRACING=${LANGSMITH_TRACING:-false}
+      - LANGSMITH_ENDPOINT=${LANGSMITH_ENDPOINT:-}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY:-}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT:-}
+    volumes:
+      - ./frontend_streamlit:/app
+      - ./.env:/app/.env:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

@@ -1,0 +1,700 @@
+% Ce fichier est inclus dans main.tex
+% Ne pas compiler directement - utiliser main.tex
+
+\chapter{Fondements Théoriques du Traitement Automatique des Langues et du Résumé Automatique}
+
+\section{Introduction}
+
+Ce chapitre présente les fondements essentiels qui nous conduisent des approches TAL classiques aux grands modèles de langage (LLMs) utilisés dans notre application multi-matières (maths, physique, etc.) et multi-niveaux. L'objectif est de donner un cadre concis sur :
+\begin{itemize}
+    \item l'évolution du TAL vers les Transformers puis les LLMs,
+    \item les atouts des LLMs modernes : multilingue (FR/EN/AR), polyvalence par simple prompt (génération d’examens, correction, feedback), et capacité d'outillage (LangChain/agents),
+    \item la mise en œuvre dans notre système : génération d'examens pour différentes matières et niveaux, correction automatique des réponses, détection de difficultés récurrentes chez un élève et feedback aux enseignants.
+\end{itemize}
+
+Nous rappelons brièvement l’évolution historique (symbolique \textrightarrow{} statistique \textrightarrow{} RNN \textrightarrow{} Transformers), puis nous nous focalisons sur la valeur ajoutée des LLMs pour l’édition multilingue, la personnalisation pédagogique et l’automatisation des tâches enseignantes.
+
+\section{Introduction au Traitement Automatique des Langues}
+
+\subsection{Définition et Objectifs du TAL}
+
+Le traitement automatique des langues (TAL), ou Natural Language Processing (NLP), représente l'une des branches les plus ambitieuses de l'intelligence artificielle. Son objectif fondamental consiste à permettre aux machines de comprendre, interpréter et générer le langage humain de manière cohérente et contextuellement appropriée. Ce domaine a connu une évolution remarquable au cours des sept dernières décennies, passant de systèmes symboliques rigides à des architectures neuronales sophistiquées capables de performances quasi-humaines sur certaines tâches.
+
+L'importance du TAL dans le contexte éducatif francophone est double : d'une part, il offre des outils pour automatiser l'analyse et l'évaluation de productions d'apprenants ; d'autre part, il permet la génération de contenus pédagogiques adaptés et personnalisés. Cependant, la complexité linguistique du français—avec ses accords morphosyntaxiques élaborés, sa richesse flexionnelle et ses multiples registres—pose des défis spécifiques que les modèles doivent surmonter pour être véritablement efficaces en contexte éducatif.
+
+\subsection{Évolution Historique du TAL}
+
+Le développement du TAL a connu plusieurs phases marquantes :
+
+\begin{itemize}
+    \item \textbf{Années 1950-1960} : Premiers systèmes de traduction automatique basés sur des règles grammaticales strictes. Les approches étaient purement symboliques et nécessitaient une formalisation exhaustive de la grammaire.
+    
+    \item \textbf{Années 1970-1980} : Introduction des grammaires formelles et des automates pour modéliser les structures linguistiques. Développement des systèmes experts et des bases de connaissances.
+    
+    \item \textbf{Années 1990} : Adoption de méthodes statistiques, exploitant de grands corpus de textes pour améliorer la précision des modèles. Émergence des modèles probabilistes et des approches basées sur les fréquences.
+    
+    \item \textbf{Années 2000} : Émergence des approches basées sur l'apprentissage automatique, notamment les modèles de Markov cachés (HMM) et les réseaux neuronaux. Introduction des représentations distribuées (word embeddings).
+    
+    \item \textbf{Années 2010 à aujourd'hui} : Révolution avec l'introduction des architectures Transformer, puis des LLMs pré-entraînés à grande échelle capables de traiter des contextes longs, d’être multilingues et d’exécuter de multiples tâches avec du prompt engineering.
+\end{itemize}
+
+\subsection{Applications du TAL}
+
+Les applications du TAL sont vastes et variées :
+
+\begin{itemize}
+    \item \textbf{Interfaces vocales} : Reconnaissance de la parole (transcription automatique de l'oral vers l'écrit) et synthèse de la parole (génération de sons à partir de texte).
+    
+    \item \textbf{Génération de textes} : Production automatique de textes cohérents et contextuellement appropriés.
+    
+    \item \textbf{Reconnaissance de l'écriture manuscrite} : Lecture automatique de l'écriture manuscrite libre.
+    
+    \item \textbf{Correction orthographique et grammaticale} : Détection et correction automatiques des erreurs dans les textes.
+    
+    \item \textbf{Résumé automatique} : Condensation automatique de documents longs en résumés concis.
+    
+    \item \textbf{Traduction automatique} : Conversion automatique d'un texte d'une langue vers une autre.
+    
+    \item \textbf{Analyse de sentiments} : Identification automatique des opinions et émotions dans les textes.
+    
+    \item \textbf{Réponse aux questions} : Génération automatique de réponses à partir de documents ou de bases de connaissances.
+\end{itemize}
+
+\section{Évolution des Méthodes de TAL}
+
+\subsection{Des Transformers aux LLMs modernes}
+
+Les Transformers ont ouvert la voie aux LLMs récents qui apportent trois atouts majeurs pour notre cas d’usage :
+\begin{itemize}
+    \item \textbf{Multilingue et contextes longs} : production fluide en français, anglais et arabe, avec des fenêtres de contexte \textasciitilde{}128k tokens adaptées aux documents pédagogiques longs.
+    \item \textbf{Polyvalence par prompt} : avec du prompt engineering, un même modèle peut générer des examens, corriger des réponses, produire des feedbacks détaillés et adapter son style ou sa langue sans réentraînement.
+    \item \textbf{Outillage et agents} : via LangChain/LangGraph, les LLMs peuvent appeler des outils (recherche vectorielle, navigation documentaire) et décider du meilleur enchaînement d’actions (agent) pour répondre de manière contextualisée.
+\end{itemize}
+
+Ces capacités permettent de couvrir plusieurs matières (maths, physique, etc.) et niveaux (collège, lycée) avec la même pile technologique, en changeant simplement les prompts et les documents fournis.
+
+\subsection{Approches Symboliques et Rule-Based}
+
+L'intelligence artificielle symbolique, souvent qualifiée de \enquote{Good Old-Fashioned AI} (GOFAI), repose sur un principe fondamental : la manipulation explicite de symboles et l'application de règles logiques formelles pour reproduire un raisonnement analogue à celui de l'esprit humain, semblable à un parcours dans un arbre de décision.
+
+\subsubsection{Principes et Architecture}
+
+Son architecture suit généralement un modèle modulaire bien défini :
+
+\begin{enumerate}
+    \item \textbf{Module d'entrée} : Reçoit la requête de l'utilisateur, généralement formulée en langage naturel.
+    
+    \item \textbf{Module d'analyse (parseur)} : Décompose la phrase pour en extraire la structure syntaxique profonde, en identifiant les relations entre le sujet, le verbe et les compléments. Cette opération est souvent réalisée à l'aide d'outils de traitement du langage tels que NLTK ou spaCy.
+    
+    \item \textbf{Module sémantique} : Génère une représentation formelle du sens de l'énoncé en identifiant les entités mentionnées et leurs relations mutuelles.
+    
+    \item \textbf{Base de connaissances} : Contient un ensemble de faits déclaratifs élémentaires et des règles de production de type \enquote{SI... ALORS...} qui encodent la logique du domaine. Pour organiser ces concepts, la base de connaissances s'appuie fréquemment sur des ontologies ou des réseaux sémantiques.
+    
+    \item \textbf{Moteur d'inférence} : Consulte la base de connaissances et applique les règles de manière logique, par déduction ou inférence, pour dériver de nouveaux faits ou fournir une réponse.
+    
+    \item \textbf{Générateur de réponses} : Formule la conclusion du système en langage naturel.
+\end{enumerate}
+
+\subsubsection{Avantages et Limitations}
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Interprétabilité élevée : Les règles sont explicites et compréhensibles
+    \item Contrôle précis du comportement du système
+    \item Efficacité sur des domaines restreints et bien définis
+\end{itemize}
+
+\textbf{Limitations :}
+\begin{itemize}
+    \item Nécessite une formalisation exhaustive de la grammaire et des connaissances
+    \item Difficile à maintenir et à étendre
+    \item Fragilité face aux variations linguistiques et aux ambiguïtés
+    \item Coût élevé de développement pour chaque nouvelle langue ou domaine
+\end{itemize}
+
+\subsection{Méthodes Statistiques}
+
+\subsubsection{N-grammes}
+
+Les modèles n-grammes constituent l'une des approches statistiques les plus fondamentales en TAL. Un n-gramme est une séquence de $n$ éléments consécutifs (mots, caractères, etc.) dans un texte.
+
+\textbf{Fondements théoriques :}
+L'étude vise à démontrer que les contextes locaux dans un corpus peuvent être exploités avec des méthodes statistiques simples pour prédire la catégorie grammaticale d'un mot inconnu. Le modèle repose sur deux piliers fondamentaux :
+\begin{itemize}
+    \item La mémorisation de n-grammes
+    \item L'utilisation d'une \enquote{graine sémantique}, constituée d'un petit nombre de noms et verbes supposés connus et catégorisés
+\end{itemize}
+
+\textbf{Méthodologie d'apprentissage :}
+Le système construit son modèle en enregistrant les fréquences de tous les n-grammes de mots rencontrés dans le corpus d'apprentissage. Les ponctuations fortes sont traitées comme des mots, mais les n-grammes comprenant une frontière ne sont comptés que si la frontière est le premier ou le dernier élément du n-gramme.
+
+\textbf{Mécanisme de prédiction :}
+Dans la phase de test, les fréquences apprises sont exploitées pour faire une prédiction à chaque position du corpus. Le mot prédit dans un contexte donné est celui qui forme le n-gramme le plus fréquent avec ce contexte, selon la formule :
+\[
+w = \arg\max_w \text{freq}(w_1, \ldots, w_{n-1}, w)
+\]
+
+Le modèle explore trois configurations contextuelles distinctes :
+\begin{itemize}
+    \item \textbf{Prédiction gauche} : Le contexte précède immédiatement la cible
+    \item \textbf{Prédiction droite} : Le contexte suit la cible
+    \item \textbf{Contexte imbriqué} : Les mots du contexte sont répartis également à droite et à gauche du mot cible
+\end{itemize}
+
+\subsubsection{Modèles de Markov Cachés (HMM)}
+
+Les modèles de Markov cachés sont des modèles probabilistes qui permettent de modéliser des séquences d'observations où les états sous-jacents ne sont pas directement observables. En TAL, ils sont utilisés pour des tâches telles que le marquage morphosyntaxique (POS tagging) et la reconnaissance de la parole.
+
+\subsubsection{Champs Aléatoires Conditionnels (CRF)}
+
+Les champs aléatoires conditionnels sont des modèles probabilistes qui modélisent la distribution conditionnelle d'une séquence d'états étant donné une séquence d'observations. Ils sont particulièrement efficaces pour les tâches de séquencement telles que la reconnaissance d'entités nommées et l'analyse syntaxique.
+
+\subsection{Word Embeddings}
+
+Le Word Embedding englobe diverses techniques d'apprentissage machine qui cherchent à exprimer les mots ou les phrases d'un texte à travers des vecteurs de nombres réels, définis dans un modèle vectoriel (Vector Space Model). Son objectif principal est d'établir des connexions entre les mots au sein d'une phrase, tout en saisissant les subtilités sémantiques et syntaxiques.
+
+\subsubsection{Word2Vec}
+
+Word2Vec, introduit par Mikolov et al. en 2013, est l'une des premières méthodes efficaces pour apprendre des représentations vectorielles de mots à partir de grands corpus. Il existe deux architectures principales :
+\begin{itemize}
+    \item \textbf{CBOW (Continuous Bag of Words)} : Prédit un mot à partir de son contexte
+    \item \textbf{Skip-gram} : Prédit le contexte à partir d'un mot
+\end{itemize}
+
+Le principe fondamental des embeddings de mots repose sur l'idée que les similarités sémantiques sont reflétées par les affinités contextuelles. Par exemple, les mots \enquote{hélicoptère} et \enquote{drone} sont proches dans l'espace vectoriel car ils apparaissent dans des contextes similaires.
+
+\subsubsection{GloVe}
+
+GloVe (Global Vectors for Word Representation), introduit par Pennington et al. en 2014, combine les avantages des méthodes basées sur la factorisation de matrices et des méthodes basées sur l'apprentissage local. Il utilise des statistiques globales de cooccurrence de mots pour apprendre des représentations vectorielles.
+
+\subsubsection{FastText}
+
+FastText, développé par Facebook en 2016, étend Word2Vec en considérant les sous-mots (subwords). Chaque mot est représenté comme la somme des vecteurs de ses n-grammes de caractères, ce qui permet de gérer les mots rares et les mots hors vocabulaire.
+
+\subsection{Architectures Neuronales}
+
+\subsubsection{Réseaux de Neurones Récurrents (RNN)}
+
+Le principe fondamental, introduit par Elman (1990), est de donner au réseau une forme de mémoire en lui permettant de conserver une information sur les états précédents. Pour cela, la sortie de la couche cachée à un instant $t$ est réinjectée en entrée de cette même couche à l'instant $t+1$. Cette \enquote{boucle de contexte} permet au réseau de traiter des séquences de données où l'ordre et le contexte temporel sont importants.
+
+\textbf{Architecture :}
+L'architecture est relativement simple :
+\begin{itemize}
+    \item Une couche d'entrée $x_t$
+    \item Une couche cachée $h_t$ dont l'activation dépend de l'entrée $x_t$ et de l'état caché précédent $h_{t-1}$
+    \item Une couche de sortie $y_t$ qui dépend de l'état caché $h_t$
+\end{itemize}
+
+La formule clé est :
+\[
+h_t = \tanh(W_{xh} \cdot x_t + W_{hh} \cdot h_{t-1} + b_h)
+\]
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Capacité à modéliser des séquences : Contrairement aux réseaux feed-forward, les RNN peuvent théoriquement gérer des données séquentielles de longueur variable
+    \item Partage de paramètres : Les mêmes poids sont utilisés à chaque étape temporelle, ce qui rend le modèle efficace
+\end{itemize}
+
+\textbf{Limites :}
+\begin{itemize}
+    \item \textbf{Problème du gradient qui disparaît (ou explose)} : C'est la limite majeure. Lors de la rétropropagation à travers le temps, les gradients sont multipliés de manière répétée. Si ces gradients sont inférieurs à 1, ils tendent exponentiellement vers zéro, empêchant le réseau d'apprendre des dépendances à long terme.
+\end{itemize}
+
+\subsubsection{Long Short-Term Memory (LSTM)}
+
+Le principe du LSTM, proposé par Hochreiter \& Schmidhuber (1997), est de résoudre le problème du gradient qui disparaît. L'idée est de créer une \enquote{autoroute} pour l'information, appelée État de Cellule (Cell State), qui peut traverser le temps avec peu de transformations.
+
+\textbf{Architecture :}
+L'architecture repose sur :
+\begin{itemize}
+    \item \textbf{L'État de Cellule $C_t$} : La mémoire à long terme du réseau. C'est le \enquote{Constant Error Carousel} (CEC) qui garantit un gradient constant.
+    
+    \item \textbf{L'État Caché $h_t$} : La mémoire de travail ou la sortie à chaque instant $t$.
+    
+    \item \textbf{Trois Portes (Gates)} : Des couches sigmoïdes qui produisent des valeurs entre 0 et 1 pour contrôler le flux :
+    \begin{itemize}
+        \item \textbf{Porte d'Oubli (Forget Gate $f_t$)} : Décide quelle information de l'état de cellule précédent $C_{t-1}$ doit être oubliée
+        \item \textbf{Porte d'Entrée (Input Gate $i_t$)} : Décide quelles nouvelles informations seront stockées dans l'état de cellule $C_t$
+        \item \textbf{Porte de Sortie (Output Gate $o_t$)} : Décide quelle partie de l'état de cellule $C_t$ sera utilisée pour produire la sortie $h_t$
+    \end{itemize}
+\end{itemize}
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Apprentissage de dépendances à long terme : Grâce à l'état de cellule et aux portes, le LSTM peut se souvenir d'informations pertinentes sur des centaines, voire des milliers de pas de temps
+    \item Contrôle fin du flux d'informations : Les portes permettent un contrôle très granulaire sur la mémoire
+\end{itemize}
+
+\textbf{Limites :}
+\begin{itemize}
+    \item Complexité et coût computationnel : L'architecture contient beaucoup plus de paramètres qu'un RNN simple
+    \item Risque de surapprentissage : En raison de son grand nombre de paramètres, un LSTM peut facilement surapprendre sur de petits jeux de données
+\end{itemize}
+
+\subsubsection{Gated Recurrent Unit (GRU)}
+
+La GRU, introduite par Cho et al. (2014), est une variante simplifiée du LSTM qui combine la porte d'oubli et la porte d'entrée en une seule porte de mise à jour. Elle maintient des performances comparables au LSTM tout en étant plus simple et plus rapide à entraîner.
+
+\subsubsection{Limitations des Architectures Récurrentes}
+
+Malgré leurs succès, les architectures récurrentes présentent plusieurs limitations fondamentales :
+\begin{itemize}
+    \item Traitement séquentiel : L'impossibilité de paralléliser le traitement limite l'efficacité computationnelle
+    \item Problème du gradient qui disparaît : Même avec LSTM/GRU, l'apprentissage de très longues dépendances reste difficile
+    \item Difficulté à capturer des relations à distance : Les informations distantes dans la séquence sont difficilement accessibles
+\end{itemize}
+
+Ces limitations ont motivé le développement des architectures Transformer, qui permettent un traitement parallèle et un accès direct à toutes les positions de la séquence.
+
+\section{Le Résumé Automatique}
+
+\subsection{Définition et Enjeux}
+
+Le résumé automatique est une tâche fondamentale du TAL qui consiste à produire automatiquement une version condensée d'un document source, préservant les informations les plus importantes tout en réduisant significativement la longueur du texte. Cette tâche est particulièrement pertinente dans un contexte où la quantité d'information disponible dépasse largement la capacité humaine de traitement.
+
+Les enjeux du résumé automatique sont multiples :
+\begin{itemize}
+    \item \textbf{Efficacité informationnelle} : Permettre aux utilisateurs d'accéder rapidement à l'essentiel d'un document
+    \item \textbf{Gestion de l'information} : Faciliter le traitement de grandes quantités de documents
+    \item \textbf{Accessibilité} : Rendre l'information accessible à des publics variés
+    \item \textbf{Personnalisation} : Adapter le résumé selon les besoins spécifiques de l'utilisateur
+\end{itemize}
+
+\subsection{Types de Résumé Automatique}
+
+\subsubsection{Résumé Extraitif}
+
+Le résumé extractif est formé de segments de texte extraits directement du texte source. Ces segments peuvent être des phrases, des propositions ou n'importe quelle unité textuelle. Les premiers travaux en résumé automatique se sont appuyés sur cette approche, notamment avec les travaux de Luhn (1958) qui exploitaient la fréquence des mots.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Les phrases du résumé sont des phrases originales du texte source
+    \item Pas de génération de nouveau texte
+    \item Grammaticalement correct par construction
+    \item Peut manquer de cohérence globale
+\end{itemize}
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Évite le problème complexe de la génération de texte
+    \item Garantit la fidélité au texte source
+    \item Plus simple à implémenter
+\end{itemize}
+
+\textbf{Limitations :}
+\begin{itemize}
+    \item Peut manquer de cohérence si les phrases sélectionnées contiennent des références à des phrases non sélectionnées
+    \item Limité par le contenu exact du texte source
+    \item Peut produire des résumés redondants ou peu fluides
+\end{itemize}
+
+\subsubsection{Résumé Abstractif}
+
+Un résumé abstractif est le produit de la synthèse de la représentation sémantique du texte source avec des phrases générées automatiquement. Ces méthodes imitent, jusqu'à un certain degré, le processus naturel accompli par l'homme pour résumer un document. Par conséquent, elles produisent des résumés plus similaires aux résumés manuels.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Génération de nouvelles phrases
+    \item Reformulation du contenu
+    \item Plus flexible et naturel
+    \item Plus difficile à évaluer
+\end{itemize}
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Produit des résumés plus naturels et fluides
+    \item Peut condenser l'information de manière plus efficace
+    \item Plus proche du processus humain de résumé
+\end{itemize}
+
+\textbf{Limitations :}
+\begin{itemize}
+    \item Complexité de la génération de texte
+    \item Risque d'hallucinations (génération d'informations non présentes dans le source)
+    \item Nécessite des modèles plus sophistiqués
+\end{itemize}
+
+\subsubsection{Comparaison des Approches}
+
+Le tableau suivant résume les principales différences entre les approches extractives et abstractives :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{6cm}|p{6cm}|}
+\hline
+\textbf{Critère} & \textbf{Extractif} & \textbf{Abstractif} \\
+\hline
+Méthode & Sélection de phrases & Génération de nouvelles phrases \\
+\hline
+Fidélité & Élevée (phrases originales) & Variable (reformulation) \\
+\hline
+Cohérence & Peut être faible & Généralement meilleure \\
+\hline
+Complexité & Relativement simple & Complexe \\
+\hline
+Performance & Bonne sur textes structurés & Meilleure sur textes variés \\
+\hline
+\end{tabular}
+\caption{Comparaison des approches extractives et abstractives}
+\end{table}
+
+\section{Méthodes de Résumé Automatique}
+
+\subsection{Méthodes Extractives}
+
+\subsubsection{Méthodes Basées sur la Fréquence}
+
+Les premières méthodes extractives se basaient sur la fréquence des mots pour identifier les phrases importantes. L'idée fondamentale est qu'un mot fréquent dans le document mais rare dans la langue générale est probablement important.
+
+\textbf{Méthode de Luhn (1958) :}
+\begin{itemize}
+    \item Calcule la fréquence de chaque mot dans le document
+    \item Identifie les mots significatifs (fréquents mais pas trop communs)
+    \item Sélectionne les phrases contenant le plus de mots significatifs
+\end{itemize}
+
+\subsubsection{Méthodes Basées sur les Similarités}
+
+Ces méthodes utilisent des mesures de similarité pour identifier les phrases centrales qui sont similaires à beaucoup d'autres phrases du document.
+
+\textbf{Approche par clustering :}
+\begin{itemize}
+    \item Représente chaque phrase comme un vecteur
+    \item Effectue un clustering des phrases
+    \item Sélectionne les phrases les plus centrales de chaque cluster
+\end{itemize}
+
+\subsubsection{Méthodes Basées sur les Graphes}
+
+Ces méthodes modélisent le document comme un graphe où les nœuds représentent les phrases et les arêtes représentent les similarités entre phrases.
+
+\textbf{TextRank (Mihalcea \& Tarau, 2004) :}
+\begin{itemize}
+    \item Construit un graphe de similarité entre phrases
+    \item Applique l'algorithme PageRank pour identifier les phrases importantes
+    \item Sélectionne les phrases avec les scores les plus élevés
+\end{itemize}
+
+\subsubsection{Méthodes Basées sur l'Apprentissage Machine}
+
+Les méthodes modernes utilisent l'apprentissage supervisé pour apprendre à identifier les phrases importantes à partir d'exemples annotés.
+
+\textbf{Approches avec caractéristiques :}
+\begin{itemize}
+    \item Extraction de caractéristiques pour chaque phrase (position, longueur, mots-clés, etc.)
+    \item Entraînement d'un classifieur (SVM, Random Forest, etc.)
+    \item Prédiction de l'importance de chaque phrase
+\end{itemize}
+
+\subsection{Méthodes Abstractives}
+
+\subsubsection{Approches Basées sur les Templates}
+
+Ces méthodes utilisent des modèles prédéfinis (templates) qui sont instanciés avec le contenu extrait du document source.
+
+\textbf{Processus :}
+\begin{enumerate}
+    \item Extraction d'informations clés du document
+    \item Sélection d'un template approprié
+    \item Remplissage du template avec les informations extraites
+    \item Génération du résumé
+\end{enumerate}
+
+\subsubsection{Approches Basées sur les Règles}
+
+Ces méthodes utilisent des règles linguistiques pour transformer le texte source en résumé.
+
+\textbf{Techniques utilisées :}
+\begin{itemize}
+    \item Paraphrase : Remplacement de phrases par des équivalents plus courts
+    \item Fusion de phrases : Combinaison de plusieurs phrases en une seule
+    \item Compression de phrases : Suppression d'éléments redondants ou peu importants
+\end{itemize}
+
+\subsubsection{Approches Neuronales}
+
+Les approches neuronales modernes utilisent des architectures de réseaux neuronaux profonds pour générer des résumés abstractifs.
+
+\textbf{Architectures utilisées :}
+\begin{itemize}
+    \item \textbf{Sequence-to-Sequence (Seq2Seq)} : Modèles encodeur-décodeur avec attention
+    \item \textbf{Transformer} : Architectures basées sur l'auto-attention
+    \item \textbf{Modèles pré-entraînés} : Fine-tuning de modèles comme T5, BART, mT5
+\end{itemize}
+
+Ces approches ont révolutionné le domaine du résumé automatique en permettant de générer des résumés de qualité supérieure, plus naturels et cohérents.
+
+\section{Évaluation des Résumés Automatiques}
+
+\subsection{Métriques Automatiques}
+
+\subsubsection{ROUGE (Recall-Oriented Understudy for Gisting Evaluation)}
+
+ROUGE, proposé par Lin (2004), est la méthode la plus influente pour évaluer les résumés automatiques. Elle est basée sur le chevauchement des mots entre les résumés de référence et un résumé candidat.
+
+\textbf{Variantes de ROUGE :}
+
+\begin{itemize}
+    \item \textbf{ROUGE-N} : Mesure le rappel des n-grammes entre le résumé candidat et les résumés de référence. Les valeurs N sont généralement 1, 2 et 3 (uni-grams, bi-grams, tri-grams).
+    
+    \item \textbf{ROUGE-L (Longest Common Subsequence)} : Recherche la plus longue sous-séquence commune entre deux séquences de mots. Cette métrique capture la similarité structurelle au-delà des simples chevauchements de mots.
+    
+    \item \textbf{ROUGE-W (Weighted Longest Common Sub-sequence)} : Version améliorée de ROUGE-L où les mots de la séquence peuvent être consécutifs ou non (séparés par des mots intermédiaires). ROUGE-W garde le contrôle sur la taille des termes consécutifs.
+    
+    \item \textbf{ROUGE-S (Skip-Grams)} : Mesure le chevauchement des skip-grams entre le résumé candidat et les résumés de référence. Un skip-gram est une paire ordonnée de mots dans une phrase qui permet un écart arbitraire.
+    
+    \item \textbf{ROUGE-SU (Skip-Unigrams)} : Version améliorée de ROUGE-S qui prend également en compte les uni-grams dans l'évaluation.
+\end{itemize}
+
+\textbf{Formule ROUGE-N :}
+\[
+\text{ROUGE-N} = \frac{\sum_{S \in \{\text{Ref Summaries}\}} \sum_{\text{gram}_n \in S} \text{Count}_{\text{match}}(\text{gram}_n)}{\sum_{S \in \{\text{Ref Summaries}\}} \sum_{\text{gram}_n \in S} \text{Count}(\text{gram}_n)}
+\]
+
+\subsubsection{BLEU (Bilingual Evaluation Understudy)}
+
+Le score BLEU, proposé par Papineni et al. (2002), est une métrique de similarité largement adoptée, initialement conçue pour l'évaluation de la traduction automatique. Elle fait partie des métriques basées sur les N-grammes et a pour rôle principal de quantifier le chevauchement lexical entre un texte produit et un ou plusieurs textes de référence.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Basée sur la précision des n-grammes
+    \item Inclut une pénalité de brièveté (brevity penalty)
+    \item Mesure la similarité lexicale, pas sémantique
+\end{itemize}
+
+\textbf{Limitations :}
+\begin{itemize}
+    \item Ignore l'amélioration et le sens : BLEU ne mesure que la similarité lexicale, échouant à capturer l'équivalence sémantique
+    \item Pénalisation des changements substantiels : Le score est fortement corrélé négativement avec la distance d'édition, pénalisant les révisions profondes
+    \item Biais en faveur de l'absence de révision : Une ligne de base sans modification peut obtenir un meilleur score BLEU qu'un modèle qui améliore réellement le texte
+\end{itemize}
+
+\subsubsection{BERTScore}
+
+BERTScore, proposé par Zhang et al. (2019a), est une approche d'évaluation de génération de langage basée sur les enchâssements contextuels extraits avec le modèle BERT. Elle a été principalement conçue pour la traduction automatique mais peut être adaptée à l'évaluation de résumés.
+
+\textbf{Principe :}
+L'évaluation avec BERTScore se fait à l'aide d'une correspondance gloutonne de la similarité en cosinus entre les enchâssements des résumés candidats et de référence. La correspondance consiste à mettre en relation chaque jeton du résumé candidat avec le jeton le plus similaire dans le résumé de référence.
+
+\textbf{Avantages :}
+\begin{itemize}
+    \item Utilise des enchâssements contextuels : Un enchâssement différent est attribué à un mot en fonction de son contexte
+    \item Plus flexible et robuste que BLEU ou ROUGE
+    \item Efficace pour la détection des paraphrases
+    \item Calcule des mesures de précision, rappel et F1
+\end{itemize}
+
+\textbf{Version avancée :}
+Une version avancée de BERTScore ajoute un terme de pondération obtenu en calculant l'Inverse Document Frequency (IDF) pour donner plus d'importance aux mots rares qui sont plus indicatifs de la similarité des phrases.
+
+\subsubsection{Métriques Basées sur la Sémantique}
+
+D'autres métriques récentes exploitent les représentations sémantiques :
+
+\begin{itemize}
+    \item \textbf{WE-ROUGE} : Version améliorée de ROUGE proposée par Ng and Abrecht (2015) qui intègre les enchâssements de mots obtenus avec Word2Vec pour gérer le biais vers les similarités lexicales.
+    
+    \item \textbf{RoBERTa-STS} : Méthode d'évaluation basée sur RoBERTa, affinée sur le jeu de données STS pour apprendre la similarité entre paires de phrases.
+    
+    \item \textbf{BLEURT} : Métrique récente d'évaluation automatique basée sur BERT, conçue pour évaluer divers systèmes de génération de texte. Le modèle est entraîné en plusieurs étapes pour améliorer sa robustesse.
+\end{itemize}
+
+\subsection{Évaluation Manuelle}
+
+\subsubsection{Critères de Qualité}
+
+L'évaluation manuelle des résumés repose généralement sur plusieurs critères :
+
+\begin{itemize}
+    \item \textbf{Pertinence} : Le résumé contient-il les informations les plus importantes du document source ?
+    
+    \item \textbf{Cohérence} : Le résumé est-il cohérent et facile à comprendre ?
+    
+    \item \textbf{Concision} : Le résumé est-il suffisamment court tout en préservant l'essentiel ?
+    
+    \item \textbf{Fidélité} : Le résumé reflète-t-il fidèlement le contenu du document source sans ajouter d'informations erronées ?
+    
+    \item \textbf{Fluidité} : Le résumé est-il grammaticalement correct et naturel à lire ?
+\end{itemize}
+
+\subsubsection{Protocoles d'Évaluation}
+
+Les protocoles d'évaluation manuelle peuvent prendre différentes formes :
+
+\begin{itemize}
+    \item \textbf{Évaluation par des experts} : Des spécialistes du domaine évaluent la qualité des résumés selon des critères prédéfinis
+    
+    \item \textbf{Évaluation par des utilisateurs} : Des utilisateurs finaux évaluent l'utilité des résumés pour leurs besoins spécifiques
+    
+    \item \textbf{Comparaison avec résumés de référence} : Comparaison avec des résumés produits par des humains
+    
+    \item \textbf{Tâches de compréhension} : Évaluation indirecte via des questions de compréhension basées sur le résumé
+\end{itemize}
+
+\section{Corpus et Datasets pour le Résumé Automatique}
+
+\subsection{Corpus Généralistes}
+
+\subsubsection{CNN/DailyMail}
+
+Le corpus CNN/DailyMail est l'un des benchmarks les plus utilisés pour l'évaluation de systèmes de résumé automatique. Il contient des articles de presse avec leurs résumés (highlights) correspondants.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Environ 300 000 paires article-résumé
+    \item Articles de presse de longueur moyenne
+    \item Résumés de référence de quelques phrases
+    \item Format extractif/abstractif mixte
+\end{itemize}
+
+\subsubsection{XSum}
+
+XSum (Extreme Summarization) est un corpus de résumés très courts (une phrase) à partir d'articles de presse britanniques.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Environ 200 000 paires article-résumé
+    \item Résumés d'une seule phrase
+    \item Format abstractif pur
+    \item Défi de compression extrême
+\end{itemize}
+
+\subsubsection{Multi-News}
+
+Multi-News est un corpus pour le résumé multi-document, où plusieurs articles doivent être résumés en un seul résumé.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Environ 56 000 exemples
+    \item Plusieurs articles sources par résumé
+    \item Défi de synthèse multi-sources
+\end{itemize}
+
+\subsection{Corpus Francophones}
+
+\subsubsection{MLSUM-FR}
+
+MLSUM-FR (Multilingual Summarization Corpus - French) est un corpus volumineux de résumés automatiques en français.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item Environ 425 000 articles de presse français
+    \item Articles avec leurs résumés correspondants
+    \item Domaine : Actualités et presse
+    \item Résumés rédigés par des journalistes professionnels
+    \item Qualité linguistique élevée
+    \item Format adapté pour l'entraînement de modèles de grande taille
+\end{itemize}
+
+\textbf{Structure :}
+\begin{itemize}
+    \item Articles complets avec titre, texte et résumé
+    \item Métadonnées (date, source, catégorie)
+    \item Diversité thématique importante
+\end{itemize}
+
+\subsubsection{ALECTOR Corpus}
+
+ALECTOR est un corpus spécialisé dans le domaine éducatif français, contenant des textes adaptés pour enfants.
+
+\textbf{Caractéristiques :}
+\begin{itemize}
+    \item 79 textes éducatifs pour enfants de 7-9 ans
+    \item Versions originales et simplifiées
+    \item Domaine : Éducation et pédagogie
+    \item Adapté pour l'évaluation de l'adaptation au domaine éducatif
+    \item Taille limitée mais spécialisée
+\end{itemize}
+
+\textbf{Utilisation :}
+\begin{itemize}
+    \item Évaluation de la capacité de transfert des modèles vers le contexte pédagogique
+    \item Test de l'adaptation au domaine éducatif
+    \item Complément au corpus MLSUM-FR pour l'adaptation de domaine
+\end{itemize}
+
+\subsubsection{Comparaison et Caractéristiques}
+
+Le tableau suivant compare les caractéristiques principales des corpus francophones :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|p{5cm}|p{5cm}|}
+\hline
+\textbf{Caractéristique} & \textbf{MLSUM-FR} & \textbf{ALECTOR} \\
+\hline
+Taille & 425 000 articles & 79 textes \\
+\hline
+Domaine & Presse/Actualités & Éducation \\
+\hline
+Niveau & Adulte & Enfants 7-9 ans \\
+\hline
+Utilisation & Entraînement principal & Adaptation de domaine \\
+\hline
+Qualité & Professionnelle & Pédagogique \\
+\hline
+\end{tabular}
+\caption{Comparaison des corpus francophones}
+\end{table}
+
+% La section suivante a été supprimée à la demande du rapport : Spécificités du Français pour le TAL.
+
+\section{Conclusion du Chapitre}
+
+Ce chapitre a présenté les fondements théoriques du traitement automatique des langues et du résumé automatique. Nous avons vu l'évolution des méthodes de TAL, depuis les approches symboliques jusqu'aux architectures neuronales modernes, en passant par les méthodes statistiques et les représentations distribuées.
+
+Nous avons également exploré les différentes approches de résumé automatique, extractives et abstractives, ainsi que les métriques d'évaluation utilisées pour mesurer la qualité des résumés générés. Enfin, nous avons examiné les spécificités du français qui justifient le besoin d'adaptation des modèles pour notre contexte d'étude.
+
+Ces fondements théoriques fournissent la base nécessaire pour comprendre les choix méthodologiques et techniques qui seront présentés dans le chapitre suivant sur la méthodologie et la conception du système.
+
+% Bibliographie
+\begin{thebibliography}{99}
+
+\bibitem{elman1990finding}
+Elman, J. L. (1990). Finding Structure in Time. \textit{Cognitive Science}, 14(2), 179-211.
+
+\bibitem{hochreiter1997long}
+Hochreiter, S., \& Schmidhuber, J. (1997). Long Short-Term Memory. \textit{Neural Computation}, 9(8), 1735-1780.
+
+\bibitem{mikolov2013efficient}
+Mikolov, T., Chen, K., Corrado, G., \& Dean, J. (2013). Efficient estimation of word representations in vector space. \textit{arXiv preprint arXiv:1301.3781}.
+
+\bibitem{pennington2014glove}
+Pennington, J., Socher, R., \& Manning, C. D. (2014). Glove: Global vectors for word representation. \textit{Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP)}.
+
+\bibitem{bojanowski2017enriching}
+Bojanowski, P., Grave, E., Joulin, A., \& Mikolov, T. (2017). Enriching word vectors with subword information. \textit{Transactions of the Association for Computational Linguistics}, 5, 135-146.
+
+\bibitem{luhn1958automatic}
+Luhn, H. P. (1958). The automatic creation of literature abstracts. \textit{IBM Journal of research and development}, 2(2), 159-165.
+
+\bibitem{edmundson1969new}
+Edmundson, H. P. (1969). New methods in automatic extracting. \textit{Journal of the ACM (JACM)}, 16(2), 264-285.
+
+\bibitem{mihalcea2004textrank}
+Mihalcea, R., \& Tarau, P. (2004). TextRank: Bringing order into text. \textit{Proceedings of the 2004 conference on empirical methods in natural language processing}.
+
+\bibitem{lin2004rouge}
+Lin, C. Y. (2004). ROUGE: A package for automatic evaluation of summaries. \textit{Text summarization branches out}, 74-81.
+
+\bibitem{papineni2002bleu}
+Papineni, K., Roukos, S., Ward, T., \& Zhu, W. J. (2002). BLEU: a method for automatic evaluation of machine translation. \textit{Proceedings of the 40th annual meeting of the Association for Computational Linguistics}.
+
+\bibitem{zhang2019bertscore}
+Zhang, T., Kishore, V., Wu, F., Weinberger, K. Q., \& Artzi, Y. (2019). Bertscore: Evaluating text generation with bert. \textit{arXiv preprint arXiv:1904.09675}.
+
+\bibitem{ng2015improved}
+Ng, J. P., \& Abrecht, V. (2015). Better summarization evaluation with word embeddings for rouge. \textit{arXiv preprint arXiv:1508.06034}.
+
+\bibitem{sutskever2014sequence}
+Sutskever, I., Vinyals, O., \& Le, Q. V. (2014). Sequence to sequence learning with neural networks. \textit{Advances in neural information processing systems}, 27.
+
+\bibitem{cho2014learning}
+Cho, K., Van Merriënboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., \& Bengio, Y. (2014). Learning phrase representations using RNN encoder-decoder for statistical machine translation. \textit{arXiv preprint arXiv:1406.1078}.
+
+\bibitem{kintsch1978toward}
+Kintsch, W., \& van Dijk, T. A. (1978). Toward a model of text comprehension and production. \textit{Psychological review}, 85(5), 363.
+
+\end{thebibliography}
+

@@ -1,0 +1,36 @@
+{
+  "title": "Examen de Mathématiques - 7e - Facile",
+  "questions": [
+    {
+      "question": "Un jardinier a un sac de graines qui pèse 3/4 de kilogramme. S'il utilise 1/6 de ce sac pour planter des fleurs, quelle fraction du sac de graines lui reste-t-il ?",
+      "answer": "Pour trouver la fraction du sac de graines qui reste, on soustrait la fraction utilisée de la fraction totale.\n\n1. Fraction totale du sac : 1 (le sac entier)\n2. Fraction utilisée : 1/6\n3. Fraction restante = Fraction totale - Fraction utilisée\n   = 1 - 1/6\n   = (6/6) - (1/6)  // Pour avoir le même dénominateur\n   = 5/6\n\nLe jardinier a donc 5/6 du sac de graines restant.",
+      "course": "Fractions",
+      "difficulty": "Facile"
+    },
+    {
+      "question": "Un magasin de jouets propose un lot de 18 petits camions à un prix spécial. Si chaque camion coûte 5 $, combien d'argent le magasin gagnera-t-il en vendant tous les camions ?",
+      "answer": "Pour calculer les gains du magasin après la vente de tous les camions, on suit ces étapes :\n\n1. **Calcul du coût total des camions** : Si chaque camion coûte 5 $, et qu'il y a 18 camions, le coût total est de 18 * 5 $.\n2. **Calcul du coût total** : 18 * 5 $ = 90 $.\n3. **Résultat** : Le magasin gagnera 90 $ en vendant tous les camions.\n\nLa réponse est donc : **90 $**.",
+      "course": "Nombres entiers",
+      "difficulty": "Facile"
+    },
+    {
+      "question": "Un jardinier a un sac de graines qui pèse 3/4 de kilogramme. S'il utilise 1/6 de ce sac pour planter des fleurs, quelle fraction du sac de graines lui reste-t-il ?",
+      "answer": "Pour trouver la fraction du sac de graines restant, on suit ces étapes :\n\n1. **Déterminer la fraction utilisée** : Le jardinier utilise 1/6 du sac.\n2. **Calculer la fraction restante** : La fraction restante est de 1 - 1/6.\n3. **Effectuer le calcul** : 1 - 1/6 = (6/6) - (1/6) = 5/6.\n\nLe jardinier a donc 5/6 du sac de graines restant.",
+      "course": "Fractions",
+      "difficulty": "Facile"
+    },
+    {
+      "question": "Un magasin de jouets propose une réduction de 15 % sur tous les jeux de société. Si un jeu coûte 25 $, combien d'argent le client économisera-t-il grâce à cette réduction ?",
+      "answer": "Pour calculer la réduction, on suit ces étapes :\n\n1. **Déterminer le montant de la réduction** : La réduction est de 15 %.\n2. **Calculer le montant de la réduction** : Réduction = 15 % de 25 $\n   - Réduction = (15/100) * 25\n   - Réduction = 0,15 * 25\n   - Réduction = 3,75 $\n3. **Résultat** : Le client économisera 3,75 $ grâce à cette réduction.\n\nLe client économisera donc 3,75 $ sur un jeu de société qui coûte 25 $.",
+      "course": "Nombres entiers",
+      "difficulty": "Facile"
+    },
+    {
+      "question": "Un magasin de jouets propose une réduction de 15 % sur tous les jeux de société. Si un jeu coûte initialement 25 $, combien d'argent le magasin gagnera-t-il si 8 de ces jeux sont vendus à ce nouveau prix ?",
+      "answer": "Pour calculer le montant gagné par le magasin après la réduction, on suit ces étapes :\n\n1. **Calculer le prix après réduction** : \n   - Prix initial d'un jeu = $25\n   - Réduction = 15% de $25 = 0,15 * $25 = $3,75\n   - Nouveau prix = Prix initial - Réduction = $25 - $3,75 = $21,25\n\n2. **Calculer le montant total gagné pour 8 jeux** :\n   - Montant total = Nouveau prix d'un jeu * Nombre de jeux vendus\n   - Montant total = $21,25 * 8 = $170\n\nLe magasin gagnera donc $170 si 8 de ces jeux sont vendus à ce nouveau prix.",
+      "course": "Nombres entiers",
+      "difficulty": "Facile"
+    }
+  ],
+  "include_answers": false
+}

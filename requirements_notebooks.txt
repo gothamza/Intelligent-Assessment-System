@@ -1,0 +1,46 @@
+# Core Jupyter dependencies
+jupyter
+notebook
+jupyterlab
+ipywidgets
+
+# Data manipulation and analysis
+pandas
+numpy
+
+# Machine Learning and NLP
+transformers
+torch
+scikit-learn
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Web scraping
+requests
+beautifulsoup4
+
+# LLM APIs and chains
+openai
+langchain
+langchain-openai
+langchain-community
+langchain-groq
+# Utilities
+python-dotenv
+tqdm
+
+# Evaluation metrics
+# Note: If evaluate fails to install, you can skip it and install manually later
+# evaluate
+bert-score
+rouge-score
+nltk
+evaluate 
+sacrebleu
+# Optional: Accelerated training
+# accelerate
+# bitsandbytes
+

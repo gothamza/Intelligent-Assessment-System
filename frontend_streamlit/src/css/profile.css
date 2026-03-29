@@ -1,0 +1,49 @@
+
+.success-message {
+    color: #2ecc71;
+    font-weight: bold;
+}
+.error-message {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+
+
+.profile-circle {
+    height: 90px;
+    width: 90px;
+    background: linear-gradient(135deg, #4e73df 60%, #1cc88a 100%);
+    border-radius: 50%;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2.5rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+}
+.sidebar-nav button[data-testid="baseButton-secondary"] {
+    background-color: #f8f9fc;
+    color: #4e73df;
+    border: none;
+    transition: background 0.2s, color 0.2s;
+}
+.sidebar-nav button[data-testid="baseButton-secondary"]:hover {
+    background-color: #e3e9f7 !important;
+    color: #224abe !important;
+}
+.sidebar-nav button[data-testid="baseButton-primary"] {
+    height: 1.6rem !important;
+    background-color: #4e73df !important;
+    color: #fff !important;
+    border: none;
+}
+.sidebar-nav button[data-testid="baseButton-primary"]:hover {
+    background-color: #224abe !important;
+    color: #fff !important;
+}
+button.st-emotion-cache-1n9qh9a.ef3psqc13 {
+    height: 40px ;
+}
+

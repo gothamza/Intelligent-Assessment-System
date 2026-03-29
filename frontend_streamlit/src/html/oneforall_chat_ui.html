@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Chat UI</title>
+  <style>
+    {{CSS_CONTENT}}
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div id="messages" class="messages"></div>
+    <div class="toolbar">
+      <label>
+        <button id="attachBtn">📎</button>
+        <input type="file" id="fileInput" multiple accept=".pdf,.txt,.csv">
+      </label>
+      <button id="existingBtn">📑</button>
+      <button id="scrapeBtn">🌐</button>
+    </div>
+    <div id="existingDocs" style="display:none; padding:0.5rem; background:#fff; border-top:1px solid #ddd;"></div>
+    <div id="scrapeUrl" style="display:none; padding:0.5rem; background:#fff; border-top:1px solid #ddd;"></div>
+    <div class="input-area">
+      <input type="text" id="chatInput" placeholder="Ask a question or talk to your docs…" />
+      <button class="send" id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <script>
+    {{JS_CONTENT}}
+  </script>
+</body>
+</html>

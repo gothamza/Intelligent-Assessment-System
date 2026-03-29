@@ -1,0 +1,310 @@
+# ===========================================
+# Environment & Configuration Files
+# ===========================================
+.env
+.env.local
+.env.*.local
+*.env
+!env.example
+
+# ===========================================
+# Python
+# ===========================================
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+notebooks-env/
+*.venv
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# ===========================================
+# Docker
+# ===========================================
+# Docker volumes and data
+data/
+**/data/
+!frontend_streamlit/data/
+!frontend_streamlit/data/**
+**/uploads/
+**/generated_images/
+postgres_data/
+chroma_data/
+
+# Docker ignore patterns
+.dockerignore
+
+# ===========================================
+# Databases
+# ===========================================
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+math_tutor.db
+**/chroma_db/
+**/chroma/
+
+# ===========================================
+# Machine Learning / AI Models
+# ===========================================
+# Trained models (often large)
+models/*.zip
+models/*.pkl
+models/*.h5
+models/*.pt
+models/*.pth
+models/*.onnx
+models/*.pb
+models/*.tflite
+models/camembert_*/
+*.zip
+*.pkl
+*.h5
+*.pt
+*.pth
+
+# Hugging Face cache
+.cache/
+huggingface/
+transformers_cache/
+
+# Training artifacts
+results/
+logs/
+runs/
+wandb/
+mlruns/
+tensorboard_logs/
+
+# ===========================================
+# Data Files (Large files)
+# ===========================================
+# Keep structure but ignore large data
+Data/uploads/
+Data/chroma_db/
+Data/generated_images/
+Data/*.pdf
+Data/*.docx
+Data/*.json
+Data/*.csv
+!Data/.gitkeep
+
+# Generated datasets
+*_dataset*.json
+*_dataset*.csv
+labeled_*.csv
+generated_*.json
+merged_*.json
+
+# ===========================================
+# Backend specific
+# ===========================================
+backend/Data/
+backend/uploads/
+backend/chroma_db/
+backend_2/data/
+backend_2/uploads/
+backend_2/generated_images/
+
+# ===========================================
+# Frontend specific
+# ===========================================
+frontend_streamlit/.streamlit/
+frontend_streamlit/__pycache__/
+frontend_streamlit/**/__pycache__/
+
+# ===========================================
+# IDE & Editor
+# ===========================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ===========================================
+# OS Files
+# ===========================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================================
+# Logs & Temporary Files
+# ===========================================
+*.log
+*.log.*
+logs/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
+*.pid
+*.seed
+*.pid.lock
+
+# ===========================================
+# Documentation Build
+# ===========================================
+docs/_build/
+docs/.doctrees/
+site/
+.mkdocs/
+
+# ===========================================
+# LaTeX (if compiling locally)
+# ===========================================
+DOCS/*.aux
+DOCS/*.fdb_latexmk
+DOCS/*.fls
+DOCS/*.synctex.gz
+DOCS/*.log
+DOCS/*.out
+DOCS/*.toc
+DOCS/*.bbl
+DOCS/*.blg
+DOCS/*.bcf
+DOCS/*.run.xml
+
+# ===========================================
+# Other
+# ===========================================
+# LangSmith / LangChain
+.langsmith/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Archives (if large)
+*.tar.gz
+*.zip
+!requirements*.txt
+!*.md
+
+# Node modules (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===========================================
+# Project Specific
+# ===========================================
+# Keep example files
+!env.example
+!*.example
+
+# Ignore version numbers as directories
+0.26.0/
+0.26.0'/

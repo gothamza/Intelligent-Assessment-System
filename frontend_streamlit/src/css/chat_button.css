@@ -1,0 +1,52 @@
+/* custom_button.css
+.st-emotion-cache-19rxjzo.ef3psqc12 {
+    background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+    padding: 0.85em 1.5em;
+}
+.st-emotion-cache-19rxjzo.ef3psqc12:hover {
+    background: linear-gradient(90deg, #005bea 0%, #00fbd9 100%);
+    color: #ffffff;
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.st-emotion-cache-7ym5gk.ef3psqc12 {
+    background: linear-gradient(90deg, #3a7bd5 0%, #00d2ff 100%);
+    color: #ffffff !important;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 1rem 0;
+    padding: 0.85em 1.5em;
+}
+
+.st-emotion-cache-7ym5gk.ef3psqc12:hover {
+    background: linear-gradient(90deg, #005bea 0%, #00fbd9 100%);
+    color: #ffffff;
+    transform: scale(1.03);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.st-emotion-cache-1dp5vir {
+    display: none;
+}
+
+
+.stButton>button {
+    width: 100%;
+} */

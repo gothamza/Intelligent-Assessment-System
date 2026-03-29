@@ -1,0 +1,230 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env
+pip-log.txt
+pip-delete-this-directory.txt
+.tox
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.ENV/
+.venv
+venv
+ENV
+env
+.ENV
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Streamlit
+.streamlit/
+
+# Data and models (will be mounted as volumes)
+Data/
+Data
+models/
+models
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.bin
+*.safetensors
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Documentation
+README.md
+*.md
+
+# Large files and archives
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+
+# Jupyter notebooks (optional - remove if you want to include them)
+*.ipynb
+.ipynb_checkpoints/
+notebooks/
+notebooks
+notebooks-env
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Additional large directories and files
+node_modules/
+.npm/
+.yarn/
+dist/
+build/
+target/
+out/
+
+# Python package files
+*.egg-info/
+*.egg
+*.whl
+
+# Large data files
+*.csv
+*.json
+*.xml
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Media files
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mp3
+*.wav
+*.flac
+*.aac
+*.ogg
+*.wma
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.svg
+*.ico
+*.webp
+
+# Office documents (if not needed in container)
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+*.odt
+*.ods
+*.odp
+
+# Backup files
+*.bak
+*.backup
+*.old
+*~
+
+# System files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-*
+.atom/
+.brackets.json
+
+# Package manager files
+package-lock.json
+yarn.lock
+Pipfile.lock
+poetry.lock
+
+# Test and coverage files
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# Documentation build files
+docs/_build/
+site/
+_site/
+
+# Temporary Python files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+*.dylib
+*.dll
+
+# Environment and config files
+.env*
+!.env.example
+config.ini
+settings.ini
+*.conf
+*.cfg
+
+# Cache directories
+.cache/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

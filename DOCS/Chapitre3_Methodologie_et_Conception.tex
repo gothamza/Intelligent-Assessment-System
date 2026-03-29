@@ -1,0 +1,96 @@
+﻿% Ce fichier est inclus dans main.tex
+% Ne pas compiler directement - utiliser main.tex
+
+\chapter{Méthodologie, Conception et Déploiement du Système}
+
+\section{Introduction}
+
+Ce chapitre présente la méthodologie adoptée pour concevoir, implémenter et valider le système de génération automatisée de feedbacks pédagogiques multi-matières et multi-niveaux. Contrairement à un fine-tuning local, nous nous appuyons sur des LLMs hébergés via l’API Groq, orchestrés avec LangChain/LangGraph, et déployés dans une architecture microservices (FastAPI, Streamlit, PostgreSQL, ChromaDB) sous Docker Compose.
+
+\section{Paradigme de Recherche}
+
+\subsection{Nature expérimentale et itérative}
+
+Approche orientée produit : chaque itération ajoute/stabilise une fonctionnalité (auth, upload, RAG, génération/passage d’examens, tuteur IA multilingue), validée par tests fonctionnels. Pas de fine-tuning local : on optimise prompts et orchestration RAG.
+
+\textbf{Objectifs de validation} : pertinence du feedback, robustesse upload/indexation, latence acceptable, cohérence multilingue (FR/EN/AR).
+
+\subsection{Approche méthodologique}
+
+\begin{enumerate}
+    \item Conception : architecture microservices, choix des modèles Groq.
+    \item Dév. backend : auth JWT, gestion users/chats/docs, endpoints RAG (LangGraph), intégration Groq.
+    \item Dév. frontend : UI Streamlit (home, chat, upload, documents, génération/passage d’examens), multilingue, sélection de modèle.
+    \item Intégration/déploiement : Docker Compose (backend, frontend, postgres, chromadb), variables d’environnement.
+    \item Test/validation : scénarios upload/list, RAG, génération/passage d’examen, UX, prompts.
+\end{enumerate}
+
+\section{Gestion des Documents et Système d'Upload}
+
+\subsection{Upload utilisateurs}
+PDF, DOCX, TXT. Sauvegarde métadonnées (PostgreSQL). Traitement asynchrone : extraction, nettoyage, chunking. Endpoint de statut d’indexation.
+
+\subsection{Indexation et recherche vectorielle}
+ChromaDB, embeddings multilingues, filtrage par \texttt{document\_id} pour limiter le contexte. Fallback : récupérer tous les chunks du document si la recherche sémantique est vide.
+
+\section{Architecture du Système}
+
+\subsection{Vue d'Ensemble}
+
+Le système est organisé en microservices : backend, frontend, DB, vector store. Les échanges sont basés sur des API REST et un workflow RAG orchestré.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{architecture_systeme.png}
+\caption{Architecture générale du système}
+\label{fig:architecture}
+\end{figure}
+
+\subsection{Docker et Conteneurisation : pourquoi c'est important}
+
+Nous avons choisi Docker et Docker Compose pour garantir :
+\begin{itemize}
+    \item Isolation complète des dépendances (Python, Postgres, ChromaDB, etc.).
+    \item Reproductibilité : même configuration de déploiement en local, CI/CD et production.
+    \item Mise à l'échelle facile (ajout de réplicas backend, verticalisation ou remplacement de modèle). 
+    \item Gestion claire des variables d'environnement et secrets via fichier `.env`.
+    \item Développement rapide : hot reload frontend/backend sans conflit de version de bibliothèques.
+\end{itemize}
+
+Docker Compose centralise la stack : `backend` (FastAPI), `frontend` (Streamlit), `postgres`, `chromadb`, et éventuellement services d’observabilité. Cela simplifie énormément le passage de la préproduction à la production et favorise la portabilité entre environnements.
+
+\section{Choix des Modèles de Langage (Groq)}
+
+\subsection{Modèles utilisés}
+\begin{itemize}
+    \item \textbf{llama-3.1-8b-instant} : rapide/économique, contexte ~128k.
+    \item \textbf{llama-3.3-70b-versatile} : généraliste performant, contexte ~128k.
+    \item \textbf{qwen/qwen3-32b} : multilingue, contexte ~128k.
+\end{itemize}
+
+\section{Workflows IA et RAG (LangChain / LangGraph)}
+\begin{itemize}
+    \item Historique converti en messages LangChain.
+    \item Recherche ChromaDB filtrée par \texttt{document\_id}; fallback sur tous les chunks du document.
+    \item Prompt système flexible : accepte tout type de document (pas seulement maths).
+    \item Génération via modèle Groq sélectionné; fallback RAG simple en cas d’échec LangGraph.
+    \item Prompts multilingues (FR/EN/AR) tenant compte de la matière, du niveau, du cours et des instructions personnalisées.
+\end{itemize}
+
+\section{Fonctionnalités Pédagogiques}
+\begin{itemize}
+    \item \textbf{Génération d’examens} : niveau, matière, cours, distribution par cours; export JSON/PDF/DOCX; langue imposée dans le prompt; boutons rapides.
+    \item \textbf{Passage d’examens} : chargement JSON/PDF/DOCX, saisie réponses, feedback par question et global.
+    \item \textbf{Tuteur IA} : mode RAG document+chat, historique persistant.
+\end{itemize}
+
+\section{Déploiement, Sécurité et Scalabilité}
+\begin{itemize}
+    \item \textbf{Déploiement} : Docker Compose (backend, frontend, postgres, chromadb), ports 8000/8502/5432/8001.
+    \item \textbf{Sécurité} : JWT, hash PBKDF2-SHA512, CORS pour Streamlit.
+    \item \textbf{Scalabilité} : séparation des services, ChromaDB persistant, scaling horizontal possible.
+\end{itemize}
+
+\section{Conclusion du Chapitre}
+
+La méthodologie s’appuie sur LLMs via API Groq, du RAG LangChain/LangGraph, et une architecture containerisée. Elle remplace la phase de fine-tuning local par du prompt engineering code-first et une orchestration modulable. 

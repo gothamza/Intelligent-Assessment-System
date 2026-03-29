@@ -1,0 +1,359 @@
+% Ce fichier est inclus dans main.tex
+% Ne pas compiler directement - utiliser main.tex
+
+\chapter{Introduction et État de l'Art sur les Transformateurs}
+
+\section{Introduction}
+
+Ce premier chapitre introduit le contexte général de notre projet et présente l'état de l'art sur les architectures Transformer et les systèmes de génération de feedback pédagogique. Nous commençons par contextualiser le problème de la génération automatique de feedbacks pédagogiques personnalisés en mathématiques, en identifiant les défis spécifiques liés à l'adaptation contextuelle, à la pertinence pédagogique et aux besoins des apprenants. Nous présentons ensuite la problématique de recherche et les objectifs que nous visons à atteindre.
+
+La seconde partie de ce chapitre est consacrée à un examen approfondi de l'état de l'art sur les architectures Transformer et leur application dans le domaine éducatif. Nous explorons leur évolution depuis leur introduction en 2017, leur classification selon différents paradigmes (autoregressifs, auto-encodage, sequence-to-sequence), et les modèles spécifiquement adaptés au français. Nous analysons également les techniques d'adaptation, de fine-tuning, et les applications dans le domaine de l'éducation assistée par IA, notamment les systèmes de tutorat intelligent et de génération de feedback. Enfin, nous discutons des défis actuels et des perspectives d'évolution de ces technologies dans le contexte pédagogique.
+
+Ce chapitre établit les fondations théoriques et techniques nécessaires pour comprendre les choix méthodologiques et l'implémentation qui seront présentés dans les chapitres suivants.
+
+\subsection{Contexte et Motivation}
+
+L'émergence des architectures Transformer, introduites par Vaswani et al. en 2017 dans leur article fondateur \enquote{Attention Is All You Need}, a profondément transformé le paysage du traitement automatique des langues (TAL) et ouvert de nouvelles perspectives pour l'éducation assistée par l'intelligence artificielle. Ces architectures révolutionnaires, incarnées par des modèles emblématiques tels que BERT \cite{devlin2018bert}, GPT \cite{radford2018improving}, T5 \cite{raffel2019exploring} et les modèles récents comme Llama, Qwen et GPT-OSS, offrent des performances remarquables en matière de compréhension et de génération textuelle, ouvrant des perspectives prometteuses pour l'enseignement personnalisé.
+
+Dans le contexte éducatif, et particulièrement pour l'enseignement des mathématiques, la génération automatique de feedbacks pédagogiques personnalisés représente un défi majeur. Les travaux de Hattie et Timperley (2007) ont démontré que le feedback efficace peut avoir un impact significatif sur l'apprentissage (effect size d=0.79), soit presque le double de l'influence moyenne de l'école (d=0.40). Cependant, la génération manuelle de feedbacks adaptés est coûteuse en temps et difficilement scalable, limitant son application à grande échelle.
+
+Les systèmes de tutorat intelligent (ITS) traditionnels présentent des limitations significatives : ils sont rigides, coûteux à développer, et ne s'adaptent pas facilement aux besoins individuels des apprenants. L'intégration des modèles de langage de grande taille (LLMs) via des APIs comme Groq, combinée à des techniques de RAG (Retrieval-Augmented Generation), offre une alternative prometteuse pour créer des systèmes de feedback adaptatifs et personnalisés.
+
+Notre système propose une architecture moderne basée sur FastAPI et Streamlit, intégrant PostgreSQL pour la gestion des données, ChromaDB pour la recherche vectorielle, et LangChain/LangGraph pour l'orchestration des workflows IA. Le système permet aux enseignants d'uploader des documents pédagogiques, de générer automatiquement des examens personnalisés, et aux étudiants de recevoir des feedbacks détaillés et adaptés à leurs réponses.
+
+Face à ces constats, le présent travail vise à développer un système automatisé de génération de feedbacks pédagogiques en mathématiques, en exploitant les capacités des modèles de langage modernes et des techniques de RAG pour créer un outil pédagogique efficace, scalable et adaptatif.
+
+\subsection{Problématique}
+
+La génération automatique de feedbacks pédagogiques personnalisés en mathématiques représente un défi majeur pour l'enseignement et l'apprentissage assisté par l'intelligence artificielle. Les approches traditionnelles de feedback manuel présentent des limitations significatives en termes de scalabilité, de coût, et d'adaptation aux besoins individuels des apprenants. Face à la complexité des besoins éducatifs et à la nécessité de fournir des retours adaptés et constructifs, le développement d'un système automatisé capable de générer des feedbacks pédagogiques de qualité devient une nécessité.
+
+Dans ce contexte, l'application des modèles de langage de type Transformer, combinée aux techniques de RAG (Retrieval-Augmented Generation), au domaine éducatif francophone ouvre des perspectives prometteuses, mais soulève plusieurs questions fondamentales :
+
+\textbf{Comment développer un système automatisé de génération de feedbacks pédagogiques en mathématiques, exploitant les modèles de langage modernes (LLMs) et les techniques de RAG, pour fournir des retours personnalisés, adaptés au niveau de l'apprenant, et alignés avec le modèle de feedback de Hattie \& Timperley, tout en assurant la pertinence pédagogique, la scalabilité et l'efficacité du système ?}
+
+\subsection{Objectifs de la Recherche}
+
+\subsubsection{Objectif Général}
+
+Développer et valider un système automatisé de génération de feedbacks pédagogiques en mathématiques, fondé sur les modèles de langage modernes (LLMs) et les techniques de RAG, capable de fournir des retours personnalisés et adaptés aux réponses des étudiants, avec des applications directes dans l'enseignement des mathématiques aux niveaux collège et lycée.
+
+\subsubsection{Objectifs Spécifiques}
+
+\begin{enumerate}
+    \item \textbf{Conception et développement de l'architecture système}
+    \begin{itemize}
+        \item Développer un backend FastAPI avec authentification JWT et gestion des utilisateurs
+        \item Implémenter un frontend Streamlit interactif et multilingue (FR, EN, AR)
+        \item Intégrer PostgreSQL pour la gestion des données structurées (utilisateurs, chats, documents)
+        \item Configurer ChromaDB pour la recherche vectorielle et l'indexation de documents
+    \end{itemize}
+    
+    \item \textbf{Intégration des modèles de langage et RAG}
+    \begin{itemize}
+        \item Intégrer les modèles Groq (Llama, Qwen, GPT-OSS) via l'API Groq
+        \item Implémenter un système RAG avec LangChain et LangGraph pour la récupération contextuelle
+        \item Développer des workflows d'orchestration pour la génération de contenu pédagogique
+        \item Adapter les prompts selon le niveau, la matière et les instructions personnalisées
+    \end{itemize}
+    
+    \item \textbf{Développement des fonctionnalités pédagogiques}
+    \begin{itemize}
+        \item Implémenter un système de génération d'examens personnalisés avec distribution par cours
+        \item Développer un module de passage d'examens avec feedback automatique
+        \item Créer un tuteur IA interactif avec support multilingue
+        \item Intégrer le modèle de feedback de Hattie \& Timperley (Feed Up, Feed Back, Feed Forward)
+    \end{itemize}
+    
+    \item \textbf{Évaluation et validation du système}
+    \begin{itemize}
+        \item Tester les performances des différents modèles Groq sur des tâches pédagogiques
+        \item Évaluer la qualité des feedbacks générés via des métriques automatiques (BLEU, ROUGE, BERTScore)
+        \item Valider l'expérience utilisateur et l'utilité pédagogique du système
+        \item Analyser la scalabilité et les performances du système en production
+    \end{itemize}
+\end{enumerate}
+
+\section{État de l'Art sur les Transformateurs}
+
+\subsection{Introduction aux Transformateurs}
+
+Les transformateurs ont révolutionné le domaine du traitement automatique du langage naturel (TALN) en offrant des performances inégalées dans diverses tâches linguistiques. Introduits par Vaswani et al. \cite{vaswani2017attention} en 2017, les transformateurs sont des architectures de réseaux neuronaux conçues pour traiter des séquences de données, notamment le texte, en exploitant des mécanismes d'attention. Contrairement aux réseaux neuronaux récurrents (RNN) qui traitent les données de manière séquentielle, les transformateurs permettent un traitement parallèle des séquences, améliorant ainsi l'efficacité et la capacité à capturer des dépendances à long terme dans les données.
+
+Un \textbf{Transformer} est un modèle d'apprentissage profond qui adopte le mécanisme d'attention, pondérant différemment l'importance de chaque partie des données d'entrée. Il est utilisé principalement dans le domaine du traitement automatique du langage naturel (TALN) et en vision par ordinateur. Il s'agit d'un modèle d'apprentissage profond dans lequel chaque sortie est connectée à chaque élément et où les pondérations entre eux sont calculées dynamiquement en fonction de leurs connexions.
+
+\subsection{Pourquoi les Transformateurs dans le TALN ?}
+
+La comparaison entre les architectures CNN, RNN et Transformers révèle que les Transformers sont le meilleur modèle pour traiter de grandes séquences en TALN. Les RNN et CNN peuvent traiter de courtes séquences mais ne sont pas efficaces pour traiter de grandes séquences. Les Transformers résolvent plusieurs problèmes fondamentaux des architectures précédentes :
+
+\begin{enumerate}
+    \item \textbf{Problème du gradient qui disparaît} : Contrairement aux RNN qui souffrent de la perte d'information sur de longues séquences, les Transformers peuvent capturer des dépendances à très long terme grâce au mécanisme d'attention.
+    
+    \item \textbf{Traitement parallèle} : Contrairement aux RNN qui traitent les séquences séquentiellement, les Transformers permettent un traitement parallèle de tous les tokens, réduisant considérablement le temps d'entraînement.
+    
+    \item \textbf{Capacité de modélisation} : Les Transformers peuvent modéliser des relations complexes entre tous les éléments d'une séquence simultanément, sans être limités par la distance temporelle.
+\end{enumerate}
+
+\subsection{Architecture Fondamentale des Transformateurs}
+
+\subsubsection{Principe Fondamental : \enquote{Attention Is All You Need}}
+
+Le principe fondamental des Transformers repose sur le mécanisme d'attention, résumé par la célèbre phrase \enquote{Attention is all you need}. Ce mécanisme permet au modèle de se concentrer sur les parties pertinentes de l'entrée lors du traitement de chaque élément.
+
+\subsubsection{Mécanismes d'Attention}
+
+\textbf{Attention :}
+Les Transformers apprennent à pondérer la relation entre chaque élément d'entrée et chaque élément de sortie. Cela permet au modèle de déterminer quels éléments de l'entrée sont les plus importants pour générer chaque élément de sortie.
+
+\textbf{Auto-Attention (Self-Attention) :}
+Les Transformers apprennent à pondérer la relation entre chaque élément de la séquence d'entrée et tous les autres éléments de la séquence de sortie. Il s'agit d'une relation \enquote{Un-vers-plusieurs} où chaque token peut \enquote{regarder} tous les autres tokens de la séquence.
+
+\textbf{Multi-Head Self-Attention :}
+Les Transformers apprennent plusieurs façons de pondérer la relation de chaque élément de la séquence d'entrée avec tous les autres éléments de l'entrée. Il s'agit d'une relation \enquote{Plusieurs-vers-plusieurs} où le modèle peut capturer différents types de relations simultanément.
+
+\subsubsection{Composants Principaux de l'Architecture}
+
+L'architecture Transformer se compose de trois parties principales :
+
+\begin{enumerate}
+    \item \textbf{Encodeur (Encoder) :}
+    Les encodeurs sont identiques en structure. Chaque encodeur consiste en une couche d'auto-attention multi-têtes et un réseau feed-forward. Les entrées de l'encodeur passent d'abord par une couche d'auto-attention — une couche qui aide l'encodeur à regarder les autres mots de la phrase d'entrée lorsqu'il encode un mot spécifique. Les sorties de la couche d'auto-attention sont ensuite transmises à un réseau de neurones feed-forward. Le même réseau feed-forward est appliqué indépendamment à chaque position.
+    
+    \item \textbf{Décodeur (Decoder) :}
+    Les décodeurs sont également identiques en structure. Chaque décodeur consiste en une couche d'auto-attention, une couche d'attention encodeur-décodeur et une couche feed-forward. La couche d'attention encodeur-décodeur aide le décodeur à se concentrer sur les endroits appropriés de la séquence d'entrée. La couche d'auto-attention du décodeur est modifiée pour éviter d'assister aux positions suivantes (masquage causal).
+    
+    \item \textbf{Embeddings :}
+    Les embeddings sont des représentations numériques des mots, généralement sous forme de vecteurs. Ces vecteurs permettent de représenter le sens sémantique et syntaxique des mots dans un espace vectoriel continu.
+\end{enumerate}
+
+\subsection{Classification des Modèles de Langage Transformer}
+
+Les modèles Transformer peuvent être classés en plusieurs catégories selon leur architecture et leur méthode de pré-entraînement :
+
+\subsubsection{Modèles Autoregressifs}
+
+Ces modèles s'appuient sur la partie décodeur du Transformer original et utilisent un masque d'attention pour qu'à chaque position, le modèle ne puisse regarder que les tokens précédents. Les modèles autoregressifs sont optimisés pour la génération de texte séquentielle.
+
+\textbf{Exemples :}
+\begin{itemize}
+    \item \textbf{GPT (Generative Pre-trained Transformer)} \cite{radford2018improving} : Modèle unidirectionnel qui génère du texte de gauche à droite
+    \item \textbf{GPT-2, GPT-3, GPT-4} \cite{radford2019language, brown2020language} : Évolutions successives avec des capacités croissantes
+    \item \textbf{Mistral 7B} \cite{jiang2023mistral} : Modèle français autoregressif optimisé pour le français
+\end{itemize}
+
+\subsubsection{Modèles Auto-Encodage (Autoencoding)}
+
+Ces modèles s'appuient sur la partie encodeur du Transformer original et n'utilisent pas de masque, permettant au modèle de regarder tous les tokens dans les têtes d'attention. Pour le pré-entraînement, les cibles sont les phrases originales et les entrées sont leurs versions corrompues.
+
+\textbf{Exemples :}
+\begin{itemize}
+    \item \textbf{BERT (Bidirectional Encoder Representations from Transformers)} \cite{devlin2018bert} : Modèle bidirectionnel qui peut voir tout le contexte simultanément
+    \item \textbf{RoBERTa} : Version améliorée de BERT avec un pré-entraînement optimisé
+    \item \textbf{CamemBERT} \cite{martin2020camembert} : Variante française de BERT
+\end{itemize}
+
+\subsubsection{Modèles Sequence-to-Sequence}
+
+Ces modèles conservent à la fois l'encodeur et le décodeur du Transformer original. Ils sont optimisés pour les tâches de transformation de séquences, telles que la traduction automatique et le résumé.
+
+\textbf{Exemples :}
+\begin{itemize}
+    \item \textbf{T5 (Text-To-Text Transfer Transformer)} \cite{raffel2019exploring} : Modèle qui traite toutes les tâches comme une conversion texte-à-texte
+    \item \textbf{mT5 (multilingual T5)} : Version multilingue de T5, incluant le français
+    \item \textbf{BART (Bidirectional and Auto-Regressive Transformer)} \cite{lewis2020bart} : Modèle qui combine les avantages de BERT et GPT
+    \item \textbf{mBART} : Version multilingue de BART
+\end{itemize}
+
+\subsubsection{Modèles Multimodaux}
+
+Ces modèles peuvent traiter plusieurs types de données simultanément (texte, images, audio). Ils n'ont généralement pas été pré-entraînés de manière auto-supervisée comme les autres modèles.
+
+\textbf{Exemples :}
+\begin{itemize}
+    \item \textbf{CLIP} : Modèle qui comprend les images et le texte
+    \item \textbf{DALL-E} : Modèle de génération d'images à partir de texte
+\end{itemize}
+
+\subsubsection{Modèles Basés sur la Récupération (Retrieval-based)}
+
+Certains modèles utilisent la récupération de documents pendant le pré-entraînement et l'inférence pour des tâches telles que la réponse à des questions en domaine ouvert.
+
+\textbf{Exemples :}
+\begin{itemize}
+    \item \textbf{RAG (Retrieval-Augmented Generation)} : Modèle qui combine la récupération d'informations et la génération
+    \item \textbf{REALM} : Modèle qui intègre la récupération dans le processus de pré-entraînement
+\end{itemize}
+
+\subsection{Modèles Transformer pour le Français}
+
+\subsubsection{Modèles Pré-entraînés Francophones}
+
+\textbf{CamemBERT} \cite{martin2020camembert} :
+\begin{itemize}
+    \item Variante française de BERT
+    \item Pré-entraîné sur un corpus français de 138 Go
+    \item Disponible en versions base et large
+    \item Performances excellentes sur les tâches de compréhension en français
+\end{itemize}
+
+\textbf{FlauBERT} \cite{le2020flaubert} :
+\begin{itemize}
+    \item Modèle BERT pré-entraîné sur un corpus français diversifié
+    \item Inclut des textes de Wikipédia, livres, actualités
+    \item Optimisé pour le français métropolitain et variétés régionales
+\end{itemize}
+
+\textbf{mT5 (multilingual T5)} :
+\begin{itemize}
+    \item Version multilingue de T5 incluant le français
+    \item Modèle sequence-to-sequence optimisé pour la génération
+    \item Disponible en versions small, base et large
+    \item Adapté pour le résumé automatique en français
+\end{itemize}
+
+\textbf{mBART} :
+\begin{itemize}
+    \item Version multilingue de BART
+    \item Pré-entraîné sur 25 langues incluant le français
+    \item Optimisé pour la génération de texte multilingue
+\end{itemize}
+
+\textbf{Mistral 7B} \cite{jiang2023mistral} :
+\begin{itemize}
+    \item Modèle autoregressif français de 7 milliards de paramètres
+    \item Optimisé pour la génération de texte en français
+    \item Architecture efficace permettant un entraînement et une inférence rapides
+\end{itemize}
+
+\subsubsection{Comparaison des Architectures pour le Résumé Automatique}
+
+Pour la tâche de résumé automatique en français, plusieurs architectures Transformer sont pertinentes :
+
+\textbf{Modèles Encoder-Only (BERT, CamemBERT) :}
+\begin{itemize}
+    \item Avantages : Excellente compréhension contextuelle bidirectionnelle
+    \item Limites : Nécessitent une couche de classification supplémentaire pour la génération
+    \item Utilisation : Principalement pour l'extraction de phrases ou la classification
+\end{itemize}
+
+\textbf{Modèles Decoder-Only (GPT, Mistral) :}
+\begin{itemize}
+    \item Avantages : Génération naturelle de texte, apprentissage autoregressif
+    \item Limites : Ne peuvent pas voir le contexte futur lors de la génération
+    \item Utilisation : Génération de résumés avec fine-tuning
+\end{itemize}
+
+\textbf{Modèles Encoder-Decoder (T5, mT5, BART, mBART) :}
+\begin{itemize}
+    \item Avantages : Architecture optimale pour les tâches sequence-to-sequence comme le résumé
+    \item Capacité à comprendre l'entrée (encodeur) et générer la sortie (décodeur)
+    \item Utilisation : Standard pour le résumé automatique
+\end{itemize}
+
+\subsection{Techniques d'Adaptation et de Fine-tuning}
+
+\subsubsection{Fine-tuning Complet}
+
+Le fine-tuning complet consiste à entraîner tous les paramètres du modèle pré-entraîné sur une tâche spécifique. Cette approche offre les meilleures performances mais nécessite des ressources computationnelles importantes.
+
+\subsubsection{Techniques d'Adaptation Efficaces}
+
+\textbf{LoRA (Low-Rank Adaptation)} :
+\begin{itemize}
+    \item Technique qui ajoute des matrices de faible rang au modèle au lieu de modifier tous les paramètres
+    \item Réduit considérablement le nombre de paramètres à entraîner
+    \item Maintient des performances proches du fine-tuning complet
+\end{itemize}
+
+\textbf{QLoRA (Quantized LoRA)} :
+\begin{itemize}
+    \item Combine la quantification (réduction de précision) avec LoRA
+    \item Permet d'entraîner de très grands modèles sur des GPU limités
+    \item Essentiel pour l'entraînement de modèles comme Mistral 7B sur des ressources limitées
+\end{itemize}
+
+\textbf{Adapter Layers} :
+\begin{itemize}
+    \item Ajoute des couches d'adaptation spécifiques à la tâche
+    \item Permet de partager un modèle de base entre plusieurs tâches
+    \item Efficace en termes de mémoire et de stockage
+\end{itemize}
+
+\subsection{Applications des Transformers en TALN}
+
+Les Transformers ont révolutionné de nombreuses tâches en TALN :
+
+\begin{enumerate}
+    \item \textbf{Résumé Automatique} : Les modèles comme T5, BART et mT5 ont atteint des performances state-of-the-art
+    \item \textbf{Traduction Automatique} : Les modèles sequence-to-sequence ont considérablement amélioré la qualité des traductions
+    \item \textbf{Réponse aux Questions} : BERT et ses variantes ont transformé cette tâche
+    \item \textbf{Classification de Texte} : Les représentations contextuelles ont amélioré toutes les tâches de classification
+    \item \textbf{Génération de Texte} : GPT et ses successeurs ont montré des capacités impressionnantes de génération
+\end{enumerate}
+
+\subsection{Défis et Limitations}
+
+Malgré leurs succès, les Transformers présentent plusieurs défis :
+
+\begin{enumerate}
+    \item \textbf{Coût Computationnel} : L'entraînement de grands modèles nécessite des ressources importantes
+    \item \textbf{Besoins en Données} : Requièrent de grands corpus pour le pré-entraînement
+    \item \textbf{Interprétabilité} : Les mécanismes internes restent difficiles à comprendre
+    \item \textbf{Biais} : Peuvent amplifier les biais présents dans les données d'entraînement
+    \item \textbf{Longueur de Séquence} : Limités par la longueur maximale de séquence (généralement 512-2048 tokens)
+\end{enumerate}
+
+\subsection{Évolutions Récentes et Tendances Futures}
+
+Les Transformers continuent d'évoluer avec :
+
+\begin{enumerate}
+    \item \textbf{Modèles Plus Efficaces} : Réduction de la taille et du coût computationnel
+    \item \textbf{Longueurs de Séquence Étendues} : Techniques pour gérer des documents plus longs
+    \item \textbf{Multimodalité} : Intégration de différents types de données
+    \item \textbf{Apprentissage Continu} : Adaptation aux nouvelles données sans réentraînement complet
+    \item \textbf{Optimisation pour Ressources Limitées} : Techniques comme la distillation et la quantification
+\end{enumerate}
+
+\section{Conclusion du Chapitre}
+
+Ce chapitre a présenté l'introduction générale du projet et l'état de l'art sur les architectures Transformer. Nous avons vu comment les Transformers ont révolutionné le TALN en résolvant les limitations des architectures précédentes et en permettant des performances exceptionnelles sur diverses tâches.
+
+Pour notre projet de génération de résumés automatiques en français dans un contexte éducatif, les modèles sequence-to-sequence comme mT5 et BART apparaissent comme les choix les plus appropriés. Leur architecture encodeur-décodeur est optimale pour les tâches de transformation de séquences, et leur disponibilité en versions multilingues incluant le français les rend particulièrement adaptés à notre contexte.
+
+Le chapitre suivant présentera les fondements théoriques du traitement automatique des langues et l'évolution des méthodes de résumé automatique.
+
+% Bibliographie
+\begin{thebibliography}{99}
+
+\bibitem{vaswani2017attention}
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., \ldots \& Polosukhin, I. (2017). Attention is all you need. \textit{Advances in neural information processing systems}, 30.
+
+\bibitem{devlin2018bert}
+Devlin, J., Chang, M. W., Lee, K., \& Toutanova, K. (2018). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. \textit{arXiv preprint arXiv:1810.04805}.
+
+\bibitem{raffel2019exploring}
+Raffel, C., Shazeer, N., Roberts, A., Lee, K., Narang, S., Matena, M., \ldots \& Liu, P. J. (2019). Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer. \textit{Journal of Machine Learning Research}, 21(140), 1-67.
+
+\bibitem{lewis2020bart}
+Lewis, M., Liu, Y., Goyal, N., Ghazvininejad, M., Mohamed, A., Levy, O., \ldots \& Zettlemoyer, L. (2020). BART: Denoising Sequence-to-Sequence Pre-training for Natural Language Generation, Translation, and Comprehension. \textit{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}.
+
+\bibitem{jiang2023mistral}
+Jiang, A. Q., Sablayrolles, A., Mensch, A., Bamford, C., Chaplot, D. S., Casas, D. D., \ldots \& Lample, G. (2023). Mistral 7B. \textit{arXiv preprint arXiv:2310.06825}.
+
+\bibitem{martin2020camembert}
+Martin, L., Muller, B., Suárez, P. J. O., Dupont, Y., Romary, L., de la Clergerie, É., \ldots \& Sagot, B. (2020). CamemBERT: a Tasty French Language Model. \textit{Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics}.
+
+\bibitem{le2020flaubert}
+Le, H., Vial, L., Frej, J., Segonne, V., Coavoux, M., Lecouteux, B., \ldots \& Schwab, D. (2020). FlauBERT: Unsupervised Language Model Pre-training for French. \textit{Proceedings of the 12th Language Resources and Evaluation Conference}.
+
+\bibitem{radford2018improving}
+Radford, A., Narasimhan, K., Salimans, T., \& Sutskever, I. (2018). Improving Language Understanding by Generative Pre-Training. \textit{OpenAI blog}.
+
+\bibitem{radford2019language}
+Radford, A., Wu, J., Child, R., Luan, D., Amodei, D., \& Sutskever, I. (2019). Language Models are Unsupervised Multitask Learners. \textit{OpenAI blog}.
+
+\bibitem{brown2020language}
+Brown, T., Mann, B., Ryder, N., Subbiah, M., Kaplan, J. D., Dhariwal, P., \ldots \& Amodei, D. (2020). Language Models are Few-Shot Learners. \textit{Advances in neural information processing systems}, 33.
+
+\end{thebibliography}
+

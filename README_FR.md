@@ -33,11 +33,11 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
 
 ### 🎓 Contexte Académique
 
-**Auteur:** Ibtissam Fadili  
-**Encadrante:** Dr. Zineb Goutti  
-**Institution:** Faculté des Sciences de Kénitra - Université Ibn Tofail  
-**Formation:** Master Informatique et Intelligence Artificielle  
-**Année:** 2024-2025
+**Développeur:** Hamza Bouktitiya  
+**Ingénieur en Intelligence Artificielle | Doctorant**  
+**Institution:** Université Ibn Tofail, Kénitra  
+**Email:** bouktitiya.hamza.post@gmail.com  
+**Téléphone:** +212-688679653
 
 ---
 
@@ -416,19 +416,22 @@ Ce projet est développé dans le cadre d'un Projet de Fin d'Études (PFE).
 
 ## 👥 Contact
 
-**Auteur:** Ibtissam Fadili  
-**Encadrante:** Dr. Zineb Goutti  
-**Institution:** Faculté des Sciences de Kénitra - Université Ibn Tofail  
-**Repository:** https://github.com/gothamza/Intelligent-Assessment-System
+**Développeur:** Hamza Bouktitiya  
+**Titre:** Ingénieur en Intelligence Artificielle  
+**Localisation:** Kénitra, Maroc  
+**Téléphone:** +212-688679653  
+**Email:** bouktitiya.hamza.post@gmail.com  
+**LinkedIn:** [Profil LinkedIn](https://linkedin.com/in/hamzabouktitiya)  
+**GitHub:** [Profil GitHub](https://github.com/hamzabouktitiya)
 
 ---
 
 ## 🙏 Remerciements
 
-- **Dr. Zineb Goutti** - Encadrement et soutien académique
-- **Hugging Face** - Modèles et infrastructure
-- **Groq** - API LLM gratuite et performante
-- **Streamlit** - Framework d'interface web
+- **Hugging Face** - Modèles NLP et infrastructure
+- **Groq** - API LLM rapide et gratuite
+- **Streamlit** - Framework application web
+- **Communauté Open Source** - LangChain, FastAPI, PyTorch, et toutes les dépendances
 
 ---
 

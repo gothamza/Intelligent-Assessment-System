@@ -40,11 +40,11 @@ An **AI-driven comprehensive educational assessment platform** that leverages La
 
 ### Academic Context
 
-**Author:** Ibtissam Fadili  
-**Supervisor:** Dr. Zineb Goutti  
-**Institution:** Faculty of Sciences, Ibn Tofail University, Kenitra  
-**Program:** Master's in Computer Science & Artificial Intelligence  
-**Year:** 2024-2025
+**Developer:** Hamza Bouktitiya  
+**AI Engineer | PhD Candidate**  
+**Institution:** Ibn Tofail University, Kenitra  
+**Email:** bouktitiya.hamza.post@gmail.com  
+**Phone:** +212-688679653
 
 ---
 
@@ -543,20 +543,22 @@ This project is developed as part of a Master's thesis (PFE).
 
 ## 👥 Contact
 
-**Author:** Ibtissam Fadili  
-**Advisor:** Dr. Zineb Goutti  
-**Institution:** Faculty of Sciences of Kénitra - Ibn Tofail University  
-**Email:** [your-email@example.com]
+**Developer:** Hamza Bouktitiya  
+**Title:** Ingénieur en Intelligence Artificielle (AI Engineer)  
+**Location:** Kenitra, Morocco  
+**Phone:** +212-688679653  
+**Email:** bouktitiya.hamza.post@gmail.com  
+**LinkedIn:** [LinkedIn Profile](https://linkedin.com/in/hamzabouktitiya)  
+**GitHub:** [GitHub Profile](https://github.com/hamzabouktitiya)
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **Dr. Zineb Goutti** - Academic supervision and support
-- **Prof. Salma Azzouzi** & **Prof. Moulay Hassan Charaf** - Master's program coordination
-- **Alloprof** - Educational data source
-- **Hugging Face** - Models and infrastructure
+- **Hugging Face** - NLP models and infrastructure
 - **Groq** - Fast and free LLM API
+- **Streamlit** - Web application framework
+- **Open Source Community** - LangChain, FastAPI, PyTorch, and all other dependencies
 
 ---
 

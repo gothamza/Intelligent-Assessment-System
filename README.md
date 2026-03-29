@@ -136,9 +136,6 @@ An **AI-driven comprehensive educational assessment platform** that leverages La
 ![Diagramme de Classes](./images/class%20diagram.png)
 *Figure 2: Diagramme de classes montrant la structure des services backend*
 
-#### 3️⃣ Modèle de Classes - Entités & Base de Données
-![Diagramme de Classes 2](./images/class%20diagram2.png)
-*Figure 3: Diagramme de classes pour les entités et modèles de données*
 
 ### Pipeline de Traitement
 

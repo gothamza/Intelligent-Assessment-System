@@ -125,10 +125,6 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
 ![Diagramme de Classes](./images/class%20diagram.png)
 *Figure 2: Diagramme de classes montrant la structure des services backend*
 
-#### 3️⃣ Modèle de Classes - Entités & Base de Données
-![Diagramme de Classes 2](./images/class%20diagram2.png)
-*Figure 3: Diagramme de classes pour les entités et modèles de données*
-
 ### Pipeline de Traitement
 
 1. **Collecte** → Scraping de questions (Alloprof)

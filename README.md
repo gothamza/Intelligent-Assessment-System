@@ -518,8 +518,7 @@ This project is developed as part of a Master's thesis (PFE).
 **Location:** Kenitra, Morocco  
 **Phone:** +212-688679653  
 **Email:** bouktitiya.hamza.post@gmail.com  
-**Portfolio:** [Portfolio](https://hamzabouktitiya.com)  
-**Portfolio:** [Portfolio](https://hamzabouktitiya.com)  
+**Portfolio:** [Portfolio](https://gothamza.github.io/portfolio/)  
 **LinkedIn:** [LinkedIn Profile](https://linkedin.com/in/hamzabouktitiya)  
 **GitHub:** [GitHub Profile](https://github.com/hamzabouktitiya)
 

@@ -420,6 +420,7 @@ Ce projet est développé dans le cadre d'un Projet de Fin d'Études (PFE).
 **Localisation:** Kénitra, Maroc  
 **Téléphone:** +212-688679653  
 **Email:** bouktitiya.hamza.post@gmail.com  
+**Portfolio:** [Portfolio](https://gothamza.github.io/portfolio/)  
 **LinkedIn:** [Profil LinkedIn](https://linkedin.com/in/hamzabouktitiya)  
 **GitHub:** [Profil GitHub](https://github.com/hamzabouktitiya)
 

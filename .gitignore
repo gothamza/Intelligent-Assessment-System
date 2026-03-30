@@ -263,6 +263,7 @@ site/
 # ===========================================
 # LaTeX (if compiling locally)
 # ===========================================
+DOCS/
 DOCS/*.aux
 DOCS/*.fdb_latexmk
 DOCS/*.fls

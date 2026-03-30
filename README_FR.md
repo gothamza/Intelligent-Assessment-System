@@ -25,8 +25,8 @@
 
 Ce projet propose un **système automatisé et intelligent** pour générer du feedback pédagogique personnalisé sur des exercices de mathématiques de niveau collège et lycée. Il combine:
 
-- **Classification automatique** des réponses d'élèves (CamemBERT fine-tuné)
-- **Génération de feedback** adaptatif via LLMs (GPT-4, Groq, etc.)
+- **Classification automatique** des réponses d'élèves (LLM Groq)
+- **Génération de feedback** adaptatif via LLMs (Groq, OpenAI, etc.)
 - **Création d'examens** intelligente avec questions uniques
 - **Interface interactive** pour étudiants et enseignants
 - **Tuteur virtuel** basé sur l'IA pour aide personnalisée
@@ -53,8 +53,8 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
   - ✅ **Correcte**
   - ⚠️ **Partielle**
   - ❌ **Incorrecte**
-- Modèle CamemBERT fine-tuné (F1-Score: 0.91)
-- Comparaison avec classification LLM
+- Classification via LLM Groq
+- Comparaison avec plusieurs providers LLM
 
 ### 3. **💬 Génération de Feedback**
 - Feedback personnalisé et constructif
@@ -103,8 +103,8 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
          ┌───────────┴───────────┐
          │                       │
     ┌────▼──────┐         ┌──────▼──────┐
-    │ CamemBERT │         │     LLMs    │
-    │ Classifier│         │  (Feedback) │
+    │ Groq LLM  │         │     LLMs    │
+    │Classifier │         │  (Feedback) │
     └───────────┘         └─────────────┘
          │                       │
          └───────────┬───────────┘
@@ -127,12 +127,11 @@ Ce projet propose un **système automatisé et intelligent** pour générer du f
 
 ### Pipeline de Traitement
 
-1. **Collecte** → Scraping de questions (Alloprof)
+1. **Collecte** → Scraping de questions depuis sources
 2. **Génération** → Simulation de réponses d'élèves (LLM)
-3. **Étiquetage** → Classification CamemBERT
-4. **Entraînement** → Fine-tuning du classificateur
-5. **Feedback** → Génération via LLMs
-6. **Évaluation** → Métriques automatiques
+3. **Classification** → Évaluation des réponses via LLM Groq
+4. **Feedback** → Génération via LLMs
+5. **Évaluation** → Calcul de métriques automatiques
 
 ---
 
@@ -335,12 +334,12 @@ L'application comporte **7 pages** accessibles via la sidebar:
 
 ### Intelligence Artificielle
 
-| Technologie | Utilisation | Performance |
-|-------------|-------------|-------------|
-| **CamemBERT** | Classification de réponses | F1: 0.91, Accuracy: 0.89 |
-| **GPT-4 / Groq** | Génération de feedback | BLEU: 0.42, ROUGE-L: 0.58 |
-| **BERTScore** | Évaluation sémantique | Précision: 0.85 |
-| **LangChain** | Orchestration LLM | - |
+| Technologie | Utilisation |
+|-------------|-------------|
+| **Groq LLM** | Classification des réponses & Génération de feedback |
+| **LangChain** | Orchestration LLM & Pipeline RAG |
+| **OpenAI / Claude** | Génération de feedback alternative |
+| **Vector DB (Chroma)** | Récupération de contexte & Embeddings |
 
 ### Backend & Framework
 

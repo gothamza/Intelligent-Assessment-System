@@ -61,8 +61,8 @@ An **AI-driven comprehensive educational assessment platform** that leverages La
   - ✅ **Correct**
   - ⚠️ **Partial**
   - ❌ **Incorrect**
-- Fine-tuned CamemBERT model (F1-Score: 0.91)
-- Comparison with LLM classification
+- Groq LLM-based classification with instant results
+- Multi-language support (French, English, Arabic)
 - Real-time confidence scores
 
 ### 3. **💬 Feedback Generation**
@@ -114,8 +114,8 @@ An **AI-driven comprehensive educational assessment platform** that leverages La
          ┌───────────┴───────────┐
          │                       │
     ┌────▼──────┐         ┌──────▼──────┐
-    │ CamemBERT │         │     LLMs    │
-    │ Classifier│         │  (Feedback) │
+    │ Groq LLM  │         │     LLMs    │
+    │Classifier │         │  (Feedback) │
     └───────────┘         └─────────────┘
          │                       │
          └───────────┬───────────┘
@@ -139,12 +139,11 @@ An **AI-driven comprehensive educational assessment platform** that leverages La
 
 ### Pipeline de Traitement
 
-1. **Collecte** → Scraping de questions (Alloprof)
-2. **Génération** → Simulation de réponses d'élèves (LLM)
-3. **Étiquetage** → Classification CamemBERT
-4. **Entraînement** → Fine-tuning du classificateur
-5. **Feedback** → Génération via LLMs
-6. **Évaluation** → Métriques automatiques
+1. **Collection** → Scraping questions from sources
+2. **Generation** → Student response simulation (LLM)
+3. **Classification** → Answer evaluation via Groq LLM
+4. **Feedback** → Feedback generation via LLMs
+5. **Evaluation** → Automatic metrics calculation
 
 ---
 
@@ -395,12 +394,12 @@ The application has **7 pages** accessible from the sidebar:
 
 ### Artificial Intelligence
 
-| Technology | Usage | Performance |
-|------------|-------|-------------|
-| **CamemBERT** | Answer classification | F1: 0.91, Accuracy: 0.89 |
-| **GPT-4 / Groq** | Feedback generation | BLEU: 0.42, ROUGE-L: 0.58 |
-| **BERTScore** | Semantic evaluation | Precision: 0.85 |
-| **LangChain** | LLM orchestration | - |
+| Technology | Usage |
+|------------|-------|
+| **Groq LLM** | Answer classification & Feedback generation |
+| **LangChain** | LLM orchestration & RAG pipeline |
+| **OpenAI / Claude** | Alternative feedback generation |
+| **Vector DB (Chroma)** | Context retrieval & embeddings |
 
 ### Backend & Framework
 
@@ -463,35 +462,6 @@ To use the application, you'll need free API keys:
 
 ---
 
-## 📊 Performance
-
-### CamemBERT Classifier Metrics
-
-| Metric | Score |
-|--------|-------|
-| **Accuracy** | 0.89 |
-| **F1-Score (Macro)** | 0.91 |
-| **Precision** | 0.90 |
-| **Recall** | 0.89 |
-
-### Feedback Generation Metrics
-
-| Metric | Average Score |
-|--------|----------------|
-| **BLEU** | 0.42 |
-| **ROUGE-1** | 0.51 |
-| **ROUGE-L** | 0.58 |
-| **BERTScore F1** | 0.85 |
-
-### Dataset
-
-- **Total Questions:** 2,400+
-- **Generated Answers:** 7,200+
-- **Levels:** 7th to 12th grade
-- **Subjects:** Algebra, Geometry, Fractions, Calculus, etc.
-
----
-
 ## 🎯 Project Innovations
 
 ### 1. **Unique Question Generation**
@@ -548,6 +518,8 @@ This project is developed as part of a Master's thesis (PFE).
 **Location:** Kenitra, Morocco  
 **Phone:** +212-688679653  
 **Email:** bouktitiya.hamza.post@gmail.com  
+**Portfolio:** [Portfolio](https://hamzabouktitiya.com)  
+**Portfolio:** [Portfolio](https://hamzabouktitiya.com)  
 **LinkedIn:** [LinkedIn Profile](https://linkedin.com/in/hamzabouktitiya)  
 **GitHub:** [GitHub Profile](https://github.com/hamzabouktitiya)
 
